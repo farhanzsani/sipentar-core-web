@@ -1,0 +1,38 @@
+created:
+    - database/factories/UserFactory.php
+    - database/factories/MejaTanamFactory.php
+    - database/factories/WaterLogFactory.php
+    - database/factories/StokFactory.php
+    - database/factories/BudidayaFactory.php
+    - database/factories/DiagnosisFactory.php
+    - database/factories/PanenFactory.php
+    - database/factories/PenggunaanOperasionalFactory.php
+    - database/factories/TransaksiKeuanganFactory.php
+    - database/migrations/2026_10_28_061635_create_users_table.php
+    - database/migrations/2026_10_28_061636_create_meja_tanams_table.php
+    - database/migrations/2026_10_28_061637_create_water_logs_table.php
+    - database/migrations/2026_10_28_061638_create_stoks_table.php
+    - database/migrations/2026_10_28_061639_create_budidayas_table.php
+    - database/migrations/2026_10_28_061640_create_diagnoses_table.php
+    - database/migrations/2026_10_28_061641_create_panens_table.php
+    - database/migrations/2026_10_28_061642_create_penggunaan_operasionals_table.php
+    - database/migrations/2026_10_28_061643_create_transaksi_keuangans_table.php
+    - app/Models/User.php
+    - app/Models/MejaTanam.php
+    - app/Models/WaterLog.php
+    - app/Models/Stok.php
+    - app/Models/Budidaya.php
+    - app/Models/Diagnosis.php
+    - app/Models/Panen.php
+    - app/Models/PenggunaanOperasional.php
+    - app/Models/TransaksiKeuangan.php
+models:
+    User: { nama: 'string:100', username: 'string:50:unique', password: 'string:255', role: 'string:20', timestamps: timestamps }
+    MejaTanam: { nomor_meja: integer, kapasitas_lubang: integer, status: 'string:30', timestamps: timestamps }
+    WaterLog: { meja_id: 'id:meja_tanams', pH: 'decimal:4,2', tds_ppm: 'decimal:8,2', waktu: timestamp, timestamps: timestamps }
+    Stok: { nama_bahan: 'string:100', kategori: 'string:50', satuan: 'string:20', jumlah_stok: 'decimal:10,2', batas_minimum: 'decimal:10,2', timestamps: timestamps }
+    Budidaya: { user_id: 'id:users', meja_id: 'id:meja_tanams', tanggal_semai: date, jumlah_tanaman: integer, status: 'string:30', timestamps: timestamps }
+    Diagnosis: { user_id: 'id:users', budidaya_id: 'id:budidayas', image_path: 'string:255', hasil: 'string:30', confidence: 'decimal:5,2', rekomendasi: text, tanggal_diagnosis: timestamp, timestamps: timestamps }
+    Panen: { budidaya_id: 'id:budidayas', tanggal_panen: date, berat_kg: 'decimal:10,2', status: 'string:30', timestamps: timestamps }
+    PenggunaanOperasional: { user_id: 'id:users', stok_id: 'id:stoks', tanggal: date, jumlah: 'decimal:10,2', keterangan: 'string:255', timestamps: timestamps }
+    TransaksiKeuangan: { user_id: 'id:users', panen_id: 'id:panens', jenis: 'string:30', tanggal: date, jumlah: 'decimal:14,2', persentase_kas: 'decimal:5,2', kas_operasional: 'decimal:14,2', laba_bersih: 'decimal:14,2', keterangan: 'string:255', timestamps: timestamps }

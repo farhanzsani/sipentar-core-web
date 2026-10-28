@@ -1,0 +1,73 @@
+models:
+  User:
+    nama: string:100
+    username: string:50:unique
+    password: string:255
+    role: string:20
+    timestamps: true
+
+  MejaTanam:
+    nomor_meja: integer
+    kapasitas_lubang: integer
+    status: string:30
+    timestamps: true
+
+  WaterLog:
+    meja_id: id:meja_tanams
+    pH: decimal:4,2
+    tds_ppm: decimal:8,2
+    waktu: timestamp
+    timestamps: true
+
+  Stok:
+    nama_bahan: string:100
+    kategori: string:50
+    satuan: string:20
+    jumlah_stok: decimal:10,2
+    batas_minimum: decimal:10,2
+    timestamps: true
+
+  Budidaya:
+    user_id: id:users
+    meja_id: id:meja_tanams
+    tanggal_semai: date
+    jumlah_tanaman: integer
+    status: string:30
+    timestamps: true
+
+  Diagnosis:
+    user_id: id:users
+    budidaya_id: id:budidayas
+    image_path: string:255
+    hasil: string:30
+    confidence: decimal:5,2
+    rekomendasi: text
+    tanggal_diagnosis: timestamp
+    timestamps: true
+
+  Panen:
+    budidaya_id: id:budidayas
+    tanggal_panen: date
+    berat_kg: decimal:10,2
+    status: string:30
+    timestamps: true
+
+  PenggunaanOperasional:
+    user_id: id:users
+    stok_id: id:stoks
+    tanggal: date
+    jumlah: decimal:10,2
+    keterangan: string:255
+    timestamps: true
+
+  TransaksiKeuangan:
+    user_id: id:users
+    panen_id: id:panens
+    jenis: string:30
+    tanggal: date
+    jumlah: decimal:14,2
+    persentase_kas: decimal:5,2
+    kas_operasional: decimal:14,2
+    laba_bersih: decimal:14,2
+    keterangan: string:255
+    timestamps: true
