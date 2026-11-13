@@ -2,20 +2,26 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 class UserFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     */
     public function definition(): array
     {
         return [
-            'nama' => fake()->regexify('[A-Za-z0-9]{100}'),
-            'username' => fake()->userName(),
-            'password' => fake()->password(),
-            'role' => fake()->regexify('[A-Za-z0-9]{20}'),
+            'nama' => fake()->name(),
+            'username' => fake()->unique()->userName(),
+            'password' => Hash::make('password'),
+            'role' => UserRole::KARYAWAN,
         ];
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::ADMIN,
+        ]);
     }
 }
