@@ -3,14 +3,13 @@
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->user = User::factory()->create([
         'username' => 'testuser',
-        'password' => Hash::make('password123'),
+        'password' => 'password123', // Model will hash this via 'hashed' cast
         'role' => UserRole::KARYAWAN,
     ]);
 });
@@ -100,7 +99,7 @@ test('login returns validation error when password is too short', function () {
 test('admin can login', function () {
     $admin = User::factory()->admin()->create([
         'username' => 'adminuser',
-        'password' => Hash::make('password123'),
+        'password' => 'password123', // Model will hash this via 'hashed' cast
     ]);
 
     $response = $this->postJson('/api/v1/auth/login', [

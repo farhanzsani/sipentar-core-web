@@ -1,0 +1,30 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
+    {
+      "severity": "HIGH",
+      "title": "Timing attack in login",
+      "description": "Login checks User::where('username')->first() before Hash::check, leaking username existence through response timing. Refactor to always perform Hash::check even when user is not found, using a dummy hash.",
+      "confidence": "confirmed"
+    },
+    {
+      "severity": "HIGH",
+      "title": "Missing rate limiting",
+      "description": "Login endpoint has no throttle, allowing unlimited brute-force attempts. Apply throttle:api middleware or a custom login throttle.",
+      "confidence": "confirmed"
+    },
+    {
+      "severity": "MEDIUM",
+      "title": "No token expiration",
+      "description": "Sanctum tokens never expire. Compromised tokens remain valid until explicitly revoked. Publish and configure config/sanctum.php with expiration value or implement manual expiration logic.",
+      "confidence": "confirmed"
+    },
+    {
+      "severity": "HIGH",
+      "title": "Double hashing in seeder",
+      "description": "SuperAdminSeeder calls Hash::make('admin123') but the User model already has password: 'hashed' cast, hashing the password twice. Remove Hash::make from the seeder and pass plain text. Same issue exists in tests.",
+      "confidence": "confirmed"
+    }
+  ],
+  "reviewDoc": "e:\\sipentar-core-web\\.agents\\tasks\\auth-review.md"
+}
