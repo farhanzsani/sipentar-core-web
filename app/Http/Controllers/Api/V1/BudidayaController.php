@@ -11,6 +11,7 @@ use App\Services\BudidayaService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 class BudidayaController extends Controller
 {
@@ -20,9 +21,22 @@ class BudidayaController extends Controller
         protected BudidayaService $budidayaService
     ) {}
 
-    /**
-     * Display a listing of budidaya with filters
-     */
+    #[OA\Get(
+        path: '/api/v1/budidaya',
+        summary: 'Daftar budidaya',
+        security: [['bearerAuth' => []]],
+        tags: ['Budidaya'],
+        parameters: [
+            new OA\Parameter(name: 'per_page', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'meja_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'status', in: 'query', required: false, schema: new OA\Schema(type: 'string', enum: ['berjalan', 'selesai'])),
+            new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
+            new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date'))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Data budidaya berhasil diambil')
+        ]
+    )]
     public function index(Request $request): JsonResponse
     {
         $query = Budidaya::with(['user', 'meja']);
@@ -56,9 +70,28 @@ class BudidayaController extends Controller
         );
     }
 
-    /**
-     * Store a newly created budidaya
-     */
+    #[OA\Post(
+        path: '/api/v1/budidaya',
+        summary: 'Buat budidaya baru',
+        security: [['bearerAuth' => []]],
+        tags: ['Budidaya'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['meja_id', 'tanggal_semai', 'jumlah_tanaman', 'status'],
+                properties: [
+                    new OA\Property(property: 'meja_id', type: 'integer'),
+                    new OA\Property(property: 'tanggal_semai', type: 'string', format: 'date'),
+                    new OA\Property(property: 'jumlah_tanaman', type: 'integer', minimum: 1),
+                    new OA\Property(property: 'status', type: 'string', enum: ['berjalan', 'selesai'])
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: 'Budidaya berhasil dibuat'),
+            new OA\Response(response: 422, description: 'Validation error')
+        ]
+    )]
     public function store(BudidayaStoreRequest $request): JsonResponse
     {
         $budidaya = Budidaya::create($request->validated());
@@ -75,9 +108,19 @@ class BudidayaController extends Controller
         );
     }
 
-    /**
-     * Display the specified budidaya
-     */
+    #[OA\Get(
+        path: '/api/v1/budidaya/{id}',
+        summary: 'Detail budidaya',
+        security: [['bearerAuth' => []]],
+        tags: ['Budidaya'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Data budidaya berhasil diambil'),
+            new OA\Response(response: 404, description: 'Not found')
+        ]
+    )]
     public function show(int $id): JsonResponse
     {
         $budidaya = Budidaya::with(['user', 'meja'])->findOrFail($id);
@@ -88,9 +131,31 @@ class BudidayaController extends Controller
         );
     }
 
-    /**
-     * Update the specified budidaya
-     */
+    #[OA\Put(
+        path: '/api/v1/budidaya/{id}',
+        summary: 'Perbarui budidaya',
+        security: [['bearerAuth' => []]],
+        tags: ['Budidaya'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'meja_id', type: 'integer'),
+                    new OA\Property(property: 'tanggal_semai', type: 'string', format: 'date'),
+                    new OA\Property(property: 'jumlah_tanaman', type: 'integer'),
+                    new OA\Property(property: 'status', type: 'string', enum: ['berjalan', 'selesai'])
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: 'Budidaya berhasil diperbarui'),
+            new OA\Response(response: 422, description: 'Validation error'),
+            new OA\Response(response: 404, description: 'Not found')
+        ]
+    )]
     public function update(BudidayaUpdateRequest $request, int $id): JsonResponse
     {
         $budidaya = Budidaya::findOrFail($id);

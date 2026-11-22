@@ -6,14 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\Stok;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 
 class NotifikasiController extends Controller
 {
     use ApiResponse;
 
-    /**
-     * Get list of low stock notifications
-     */
+    #[OA\Get(
+        path: '/api/v1/notifikasi',
+        summary: 'Daftar notifikasi stok rendah',
+        security: [['bearerAuth' => []]],
+        tags: ['Notifikasi'],
+        responses: [
+            new OA\Response(response: 200, description: 'Data notifikasi berhasil diambil'),
+            new OA\Response(response: 401, description: 'Unauthenticated')
+        ]
+    )]
     public function index(): JsonResponse
     {
         $lowStocks = Stok::whereRaw('jumlah_stok <= batas_minimum')->get();

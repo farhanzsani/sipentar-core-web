@@ -10,14 +10,29 @@ use App\Models\Panen;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 class PanenController extends Controller
 {
     use ApiResponse;
 
-    /**
-     * Display a listing of panen with filters
-     */
+    #[OA\Get(
+        path: '/api/v1/panen',
+        summary: 'Daftar data panen',
+        security: [['bearerAuth' => []]],
+        tags: ['Panen'],
+        parameters: [
+            new OA\Parameter(name: 'per_page', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'budidaya_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'meja_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'status', in: 'query', required: false, schema: new OA\Schema(type: 'string', enum: ['terjadwal', 'selesai'])),
+            new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
+            new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date'))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Data panen berhasil diambil')
+        ]
+    )]
     public function index(Request $request): JsonResponse
     {
         $query = Panen::with(['budidaya.meja', 'budidaya.user']);
@@ -58,9 +73,28 @@ class PanenController extends Controller
         );
     }
 
-    /**
-     * Store a newly created panen
-     */
+    #[OA\Post(
+        path: '/api/v1/panen',
+        summary: 'Buat jadwal panen baru',
+        security: [['bearerAuth' => []]],
+        tags: ['Panen'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['budidaya_id', 'tanggal_panen', 'status'],
+                properties: [
+                    new OA\Property(property: 'budidaya_id', type: 'integer'),
+                    new OA\Property(property: 'tanggal_panen', type: 'string', format: 'date'),
+                    new OA\Property(property: 'status', type: 'string', enum: ['terjadwal', 'selesai']),
+                    new OA\Property(property: 'berat_kg', type: 'number', nullable: true)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: 'Panen berhasil dibuat'),
+            new OA\Response(response: 422, description: 'Validation error')
+        ]
+    )]
     public function store(PanenStoreRequest $request): JsonResponse
     {
         $panen = Panen::create($request->validated());
@@ -74,9 +108,19 @@ class PanenController extends Controller
         );
     }
 
-    /**
-     * Display the specified panen
-     */
+    #[OA\Get(
+        path: '/api/v1/panen/{id}',
+        summary: 'Detail data panen',
+        security: [['bearerAuth' => []]],
+        tags: ['Panen'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Data panen berhasil diambil'),
+            new OA\Response(response: 404, description: 'Not found')
+        ]
+    )]
     public function show(int $id): JsonResponse
     {
         $panen = Panen::with(['budidaya.meja', 'budidaya.user'])->findOrFail($id);
@@ -87,9 +131,31 @@ class PanenController extends Controller
         );
     }
 
-    /**
-     * Update the specified panen
-     */
+    #[OA\Put(
+        path: '/api/v1/panen/{id}',
+        summary: 'Perbarui data panen',
+        security: [['bearerAuth' => []]],
+        tags: ['Panen'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'budidaya_id', type: 'integer'),
+                    new OA\Property(property: 'tanggal_panen', type: 'string', format: 'date'),
+                    new OA\Property(property: 'status', type: 'string', enum: ['terjadwal', 'selesai']),
+                    new OA\Property(property: 'berat_kg', type: 'number', nullable: true)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: 'Panen berhasil diperbarui'),
+            new OA\Response(response: 422, description: 'Validation error'),
+            new OA\Response(response: 404, description: 'Not found')
+        ]
+    )]
     public function update(PanenUpdateRequest $request, int $id): JsonResponse
     {
         $panen = Panen::findOrFail($id);

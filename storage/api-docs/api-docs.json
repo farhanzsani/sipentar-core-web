@@ -243,6 +243,404 @@
                 ]
             }
         },
+        "/api/v1/budidaya": {
+            "get": {
+                "tags": [
+                    "Budidaya"
+                ],
+                "summary": "Daftar budidaya",
+                "operationId": "7b45ff5dee507e3f532cf7febf74ac1f",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "meja_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "berjalan",
+                                "selesai"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data budidaya berhasil diambil"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Budidaya"
+                ],
+                "summary": "Buat budidaya baru",
+                "operationId": "9fbca9a62be74e53a2dd47737637b77b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "meja_id",
+                                    "tanggal_semai",
+                                    "jumlah_tanaman",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "meja_id": {
+                                        "type": "integer"
+                                    },
+                                    "tanggal_semai": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "jumlah_tanaman": {
+                                        "type": "integer",
+                                        "minimum": 1
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "berjalan",
+                                            "selesai"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Budidaya berhasil dibuat"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/budidaya/{id}": {
+            "get": {
+                "tags": [
+                    "Budidaya"
+                ],
+                "summary": "Detail budidaya",
+                "operationId": "e2065f1912b5c2705e3e87b917727712",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data budidaya berhasil diambil"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Budidaya"
+                ],
+                "summary": "Perbarui budidaya",
+                "operationId": "b3d5df6ac25a5a6532a79e14ff5b786e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "meja_id": {
+                                        "type": "integer"
+                                    },
+                                    "tanggal_semai": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "jumlah_tanaman": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "berjalan",
+                                            "selesai"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Budidaya berhasil diperbarui"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/karyawan": {
+            "get": {
+                "tags": [
+                    "Karyawan"
+                ],
+                "summary": "Daftar karyawan (pemilik only)",
+                "operationId": "ed318df81adef8ea9c0adc6e0e407029",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Daftar karyawan berhasil diambil"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Karyawan"
+                ],
+                "summary": "Tambah karyawan baru (pemilik only)",
+                "operationId": "6006486b63991514505aa86ef5d01c64",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama",
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nama": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "minLength": 8
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Karyawan berhasil ditambahkan"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/karyawan/{id}": {
+            "get": {
+                "tags": [
+                    "Karyawan"
+                ],
+                "summary": "Detail karyawan (pemilik only)",
+                "operationId": "b7ea2600b1c532f9df0c45fa73a47e91",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data karyawan berhasil diambil"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Karyawan"
+                ],
+                "summary": "Perbarui data karyawan (pemilik only)",
+                "operationId": "1a18c3be1264a074f4e8704021e3edd6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama",
+                                    "username"
+                                ],
+                                "properties": {
+                                    "nama": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "minLength": 8
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Karyawan berhasil diperbarui"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/keuangan/hpp": {
             "get": {
                 "tags": [
@@ -489,6 +887,647 @@
                     },
                     "403": {
                         "description": "Pegawai tidak memiliki akses"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/meja-tanam": {
+            "get": {
+                "tags": [
+                    "MejaTanam"
+                ],
+                "summary": "Daftar meja tanam",
+                "operationId": "d03d60541bdf29cdcff99f1f1b060c74",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data meja tanam berhasil diambil"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/notifikasi": {
+            "get": {
+                "tags": [
+                    "Notifikasi"
+                ],
+                "summary": "Daftar notifikasi stok rendah",
+                "operationId": "23ae41a93e93c5cf33b676060fcf5a02",
+                "responses": {
+                    "200": {
+                        "description": "Data notifikasi berhasil diambil"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/panen": {
+            "get": {
+                "tags": [
+                    "Panen"
+                ],
+                "summary": "Daftar data panen",
+                "operationId": "06c04022971f66a95ae162399e75055d",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "budidaya_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "meja_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "terjadwal",
+                                "selesai"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data panen berhasil diambil"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Panen"
+                ],
+                "summary": "Buat jadwal panen baru",
+                "operationId": "25fb8c24e8318b315a20feea0cf5ced8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "budidaya_id",
+                                    "tanggal_panen",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "budidaya_id": {
+                                        "type": "integer"
+                                    },
+                                    "tanggal_panen": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "terjadwal",
+                                            "selesai"
+                                        ]
+                                    },
+                                    "berat_kg": {
+                                        "type": "number",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Panen berhasil dibuat"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/panen/{id}": {
+            "get": {
+                "tags": [
+                    "Panen"
+                ],
+                "summary": "Detail data panen",
+                "operationId": "947fb152326d7af70511f98a29b1cab9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data panen berhasil diambil"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Panen"
+                ],
+                "summary": "Perbarui data panen",
+                "operationId": "7e49684917b513a6e36a2e4008ac469a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "budidaya_id": {
+                                        "type": "integer"
+                                    },
+                                    "tanggal_panen": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "terjadwal",
+                                            "selesai"
+                                        ]
+                                    },
+                                    "berat_kg": {
+                                        "type": "number",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Panen berhasil diperbarui"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/penggunaan-operasional": {
+            "get": {
+                "tags": [
+                    "PenggunaanOperasional"
+                ],
+                "summary": "Daftar penggunaan operasional",
+                "operationId": "d698c276621247592f613a2193cebc31",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "stok_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data penggunaan operasional berhasil diambil"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "PenggunaanOperasional"
+                ],
+                "summary": "Catat penggunaan operasional baru",
+                "operationId": "dd31e550f1094d88a2828bd4fcec6ea1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "stok_id",
+                                    "tanggal",
+                                    "jumlah"
+                                ],
+                                "properties": {
+                                    "stok_id": {
+                                        "type": "integer"
+                                    },
+                                    "tanggal": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "jumlah": {
+                                        "type": "number",
+                                        "minimum": 0.01
+                                    },
+                                    "keterangan": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "maxLength": 255
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Penggunaan operasional berhasil dicatat"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/profil": {
+            "get": {
+                "tags": [
+                    "Profil"
+                ],
+                "summary": "Lihat profil pengguna yang sedang login",
+                "operationId": "fdf26a3e654894970aa9ea3699e496d9",
+                "responses": {
+                    "200": {
+                        "description": "Profil berhasil diambil"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Profil"
+                ],
+                "summary": "Perbarui profil pengguna",
+                "operationId": "61aaf788d7792b6b6561962cb3533caa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama",
+                                    "username"
+                                ],
+                                "properties": {
+                                    "nama": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "minLength": 8
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profil berhasil diperbarui"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/stok": {
+            "get": {
+                "tags": [
+                    "Stok"
+                ],
+                "summary": "Daftar stok bahan",
+                "operationId": "a73a68160dc393d4b3121878ed168036",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data stok berhasil diambil"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Stok"
+                ],
+                "summary": "Tambah stok baru",
+                "operationId": "20d814bb9c1a05531d4bbfea6598e350",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama_bahan",
+                                    "kategori",
+                                    "satuan",
+                                    "jumlah_stok",
+                                    "batas_minimum"
+                                ],
+                                "properties": {
+                                    "nama_bahan": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                    },
+                                    "kategori": {
+                                        "type": "string",
+                                        "maxLength": 50
+                                    },
+                                    "satuan": {
+                                        "type": "string",
+                                        "maxLength": 20
+                                    },
+                                    "jumlah_stok": {
+                                        "type": "number",
+                                        "minimum": 0
+                                    },
+                                    "batas_minimum": {
+                                        "type": "number",
+                                        "minimum": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Stok berhasil dibuat"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/stok/{id}": {
+            "get": {
+                "tags": [
+                    "Stok"
+                ],
+                "summary": "Detail stok",
+                "operationId": "c90ef183e3bf3a63e2923bf097f0d00f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data stok berhasil diambil"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Stok"
+                ],
+                "summary": "Perbarui stok",
+                "operationId": "d9a68453c220df8f986a5ab2ea792c54",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nama_bahan": {
+                                        "type": "string"
+                                    },
+                                    "kategori": {
+                                        "type": "string"
+                                    },
+                                    "satuan": {
+                                        "type": "string"
+                                    },
+                                    "jumlah_stok": {
+                                        "type": "number"
+                                    },
+                                    "batas_minimum": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Stok berhasil diperbarui"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 },
                 "security": [
@@ -781,8 +1820,40 @@
             "description": "Authentication"
         },
         {
+            "name": "Budidaya",
+            "description": "Budidaya"
+        },
+        {
+            "name": "Karyawan",
+            "description": "Karyawan"
+        },
+        {
             "name": "Keuangan",
             "description": "Keuangan"
+        },
+        {
+            "name": "MejaTanam",
+            "description": "MejaTanam"
+        },
+        {
+            "name": "Notifikasi",
+            "description": "Notifikasi"
+        },
+        {
+            "name": "Panen",
+            "description": "Panen"
+        },
+        {
+            "name": "PenggunaanOperasional",
+            "description": "PenggunaanOperasional"
+        },
+        {
+            "name": "Profil",
+            "description": "Profil"
+        },
+        {
+            "name": "Stok",
+            "description": "Stok"
         },
         {
             "name": "Transaksi Keuangan",

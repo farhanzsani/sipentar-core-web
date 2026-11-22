@@ -10,6 +10,7 @@ use App\Services\StokService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 class PenggunaanOperasionalController extends Controller
 {
@@ -19,9 +20,21 @@ class PenggunaanOperasionalController extends Controller
         protected StokService $stokService
     ) {}
 
-    /**
-     * Display a listing of penggunaan operasional with filters
-     */
+    #[OA\Get(
+        path: '/api/v1/penggunaan-operasional',
+        summary: 'Daftar penggunaan operasional',
+        security: [['bearerAuth' => []]],
+        tags: ['PenggunaanOperasional'],
+        parameters: [
+            new OA\Parameter(name: 'per_page', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'stok_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
+            new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date'))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Data penggunaan operasional berhasil diambil')
+        ]
+    )]
     public function index(Request $request): JsonResponse
     {
         $query = PenggunaanOperasional::with(['user', 'stok']);
@@ -50,9 +63,28 @@ class PenggunaanOperasionalController extends Controller
         );
     }
 
-    /**
-     * Store a newly created penggunaan operasional
-     */
+    #[OA\Post(
+        path: '/api/v1/penggunaan-operasional',
+        summary: 'Catat penggunaan operasional baru',
+        security: [['bearerAuth' => []]],
+        tags: ['PenggunaanOperasional'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['stok_id', 'tanggal', 'jumlah'],
+                properties: [
+                    new OA\Property(property: 'stok_id', type: 'integer'),
+                    new OA\Property(property: 'tanggal', type: 'string', format: 'date'),
+                    new OA\Property(property: 'jumlah', type: 'number', minimum: 0.01),
+                    new OA\Property(property: 'keterangan', type: 'string', nullable: true, maxLength: 255)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: 'Penggunaan operasional berhasil dicatat'),
+            new OA\Response(response: 422, description: 'Validation error')
+        ]
+    )]
     public function store(PenggunaanOperasionalStoreRequest $request): JsonResponse
     {
         $validated = $request->validated();
