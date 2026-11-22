@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('budidaya_id');
             $table->date('tanggal_panen');
-            $table->decimal('berat_kg', 10, 2);
+            $table->decimal('berat_kg', 10, 2)->nullable();
             $table->string('status', 30);
             $table->timestamps();
         });

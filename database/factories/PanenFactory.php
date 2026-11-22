@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Budidayas;
+use App\Models\Budidaya;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PanenFactory extends Factory
@@ -13,10 +13,10 @@ class PanenFactory extends Factory
     public function definition(): array
     {
         return [
-            'budidaya_id' => Budidayas::factory(),
-            'tanggal_panen' => fake()->date(),
-            'berat_kg' => fake()->randomFloat(2, 0, 99999999.99),
-            'status' => fake()->regexify('[A-Za-z0-9]{30}'),
+            'budidaya_id' => Budidaya::factory(),
+            'tanggal_panen' => fake()->dateTimeBetween('-30 days', '+30 days')->format('Y-m-d'),
+            'berat_kg' => fake()->randomFloat(2, 5, 50),
+            'status' => fake()->randomElement(['terjadwal', 'selesai']),
         ];
     }
 }

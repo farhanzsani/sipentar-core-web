@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\BudidayaController;
 use App\Http\Controllers\Api\V1\KaryawanController;
 use App\Http\Controllers\Api\V1\MejaTanamController;
 use App\Http\Controllers\Api\V1\NotifikasiController;
+use App\Http\Controllers\Api\V1\PanenController;
 use App\Http\Controllers\Api\V1\PenggunaanOperasionalController;
 use App\Http\Controllers\Api\V1\ProfilController;
 use App\Http\Controllers\Api\V1\StokController;
@@ -31,6 +32,12 @@ Route::prefix('v1')->group(function () {
         Route::post('/budidaya', [BudidayaController::class, 'store']);
         Route::get('/budidaya/{id}', [BudidayaController::class, 'show']);
         Route::put('/budidaya/{id}', [BudidayaController::class, 'update']);
+
+        // Panen endpoints - all authenticated users
+        Route::get('/panen', [PanenController::class, 'index']);
+        Route::post('/panen', [PanenController::class, 'store']);
+        Route::get('/panen/{id}', [PanenController::class, 'show']);
+        Route::put('/panen/{id}', [PanenController::class, 'update']);
 
         // Meja Tanam endpoints - all authenticated users
         Route::get('/meja-tanam', [MejaTanamController::class, 'index']);
