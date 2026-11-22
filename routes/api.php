@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\BudidayaController;
 use App\Http\Controllers\Api\V1\KaryawanController;
+use App\Http\Controllers\Api\V1\MejaTanamController;
 use App\Http\Controllers\Api\V1\ProfilController;
 use App\Http\Resources\Api\V1\UserResource;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,15 @@ Route::prefix('v1')->group(function () {
         Route::get('/me', function () {
             return new UserResource(auth()->user());
         });
+
+        // Budidaya endpoints - all authenticated users
+        Route::get('/budidaya', [BudidayaController::class, 'index']);
+        Route::post('/budidaya', [BudidayaController::class, 'store']);
+        Route::get('/budidaya/{id}', [BudidayaController::class, 'show']);
+        Route::put('/budidaya/{id}', [BudidayaController::class, 'update']);
+
+        // Meja Tanam endpoints - all authenticated users
+        Route::get('/meja-tanam', [MejaTanamController::class, 'index']);
 
         // Profil endpoints - pemilik only
         Route::middleware('role:pemilik')->group(function () {

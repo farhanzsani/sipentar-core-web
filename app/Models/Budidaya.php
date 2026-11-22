@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +38,16 @@ class Budidaya extends Model
             'meja_id' => 'integer',
             'tanggal_semai' => 'date',
         ];
+    }
+
+    /**
+     * Get HSS (Hari Setelah Semai) - days since tanggal_semai
+     */
+    protected function hss(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => now()->diffInDays($this->tanggal_semai)
+        );
     }
 
     public function user(): BelongsTo

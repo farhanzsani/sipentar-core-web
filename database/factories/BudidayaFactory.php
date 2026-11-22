@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\MejaTanams;
-use App\Models\Users;
+use App\Models\MejaTanam;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BudidayaFactory extends Factory
@@ -14,11 +14,11 @@ class BudidayaFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => Users::factory(),
-            'meja_id' => MejaTanams::factory(),
-            'tanggal_semai' => fake()->date(),
-            'jumlah_tanaman' => fake()->numberBetween(-10000, 10000),
-            'status' => fake()->regexify('[A-Za-z0-9]{30}'),
+            'user_id' => User::factory(),
+            'meja_id' => MejaTanam::factory(),
+            'tanggal_semai' => fake()->dateTimeBetween('-30 days', 'now'),
+            'jumlah_tanaman' => fake()->numberBetween(10, 100),
+            'status' => fake()->randomElement(['berjalan', 'selesai']),
         ];
     }
 }

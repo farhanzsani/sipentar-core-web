@@ -12,9 +12,9 @@ class MejaTanamFactory extends Factory
     public function definition(): array
     {
         return [
-            'nomor_meja' => fake()->numberBetween(-10000, 10000),
-            'kapasitas_lubang' => fake()->numberBetween(-10000, 10000),
-            'status' => fake()->regexify('[A-Za-z0-9]{30}'),
+            'nomor_meja' => fake()->unique()->numberBetween(1, 100),
+            'kapasitas_lubang' => fake()->numberBetween(50, 500),
+            'status' => fake()->randomElement(['kosong', 'terisi']),
         ];
     }
 }
