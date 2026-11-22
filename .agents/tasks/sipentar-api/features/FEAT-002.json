@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "FASE 1 - Akun dan Karyawan (pemilik only): Implement /api/v1/profil GET+PUT (pemilik updates own profile with nama, username, optional password) and /api/v1/karyawan CRUD (list GET shows only pegawai role users; POST/PUT auto-assigns pegawai role; username unique validation; password hashing). Create ProfilController, KaryawanController; ProfilUpdateRequest, KaryawanStoreRequest, KaryawanUpdateRequest; UserResource (already exists); apply role:pemilik middleware. Feature tests verify 403 for pegawai accessing these endpoints, successful CRUD operations, validation errors.",
-  "status": "pending",
+  "status": "completed",
   "steps": [
     "Create app/Http/Controllers/Api/V1/ProfilController.php with show() returning authenticated user via UserResource, and update(ProfilUpdateRequest) updating nama, username, and optional password (only hash if provided)",
     "Create app/Http/Requests/Api/V1/ProfilUpdateRequest.php validating nama (required, string, max:100), username (required, string, max:50, unique:users,username except current user id), password (nullable, string, min:8)",
@@ -35,5 +35,5 @@
     "Manual test: login as pegawai, GET /karyawan returns 403"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "FEAT-002 completed successfully. Created ProfilController (show/update for authenticated pemilik), KaryawanController (index/store/show/update for managing pegawai users). Created ProfilUpdateRequest with username unique validation excluding current user. Created KaryawanStoreRequest with auto-assigned pegawai role and KaryawanUpdateRequest with unique validation. Added routes under auth:sanctum + role:pemilik middleware. Created comprehensive Pest tests: ProfilTest (13 tests covering view/update profile, 403 for pegawai, validation, password update) and KaryawanTest (25 tests covering CRUD, 403 for pegawai, auto-role assignment, username uniqueness, password hashing, pagination). All files have valid PHP syntax. Password hashing handled by User model 'hashed' cast. Username uniqueness validated with Rule::unique()->ignore() for updates. Pagination uses default 15 per page. All responses use ApiResponse trait with proper Bahasa Indonesia messages."
 }
