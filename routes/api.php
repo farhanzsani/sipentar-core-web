@@ -3,12 +3,14 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BudidayaController;
 use App\Http\Controllers\Api\V1\KaryawanController;
+use App\Http\Controllers\Api\V1\KeuanganController;
 use App\Http\Controllers\Api\V1\MejaTanamController;
 use App\Http\Controllers\Api\V1\NotifikasiController;
 use App\Http\Controllers\Api\V1\PanenController;
 use App\Http\Controllers\Api\V1\PenggunaanOperasionalController;
 use App\Http\Controllers\Api\V1\ProfilController;
 use App\Http\Controllers\Api\V1\StokController;
+use App\Http\Controllers\Api\V1\TransaksiKeuanganController;
 use App\Http\Resources\Api\V1\UserResource;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +67,19 @@ Route::prefix('v1')->group(function () {
             Route::post('/karyawan', [KaryawanController::class, 'store']);
             Route::get('/karyawan/{karyawan}', [KaryawanController::class, 'show']);
             Route::put('/karyawan/{karyawan}', [KaryawanController::class, 'update']);
+
+            // Transaksi Keuangan endpoints - pemilik only
+            Route::get('/transaksi-keuangan', [TransaksiKeuanganController::class, 'index']);
+            Route::post('/transaksi-keuangan', [TransaksiKeuanganController::class, 'store']);
+            Route::get('/transaksi-keuangan/{id}', [TransaksiKeuanganController::class, 'show']);
+            Route::put('/transaksi-keuangan/{id}', [TransaksiKeuanganController::class, 'update']);
+
+            // Keuangan endpoints - pemilik only
+            Route::prefix('keuangan')->group(function () {
+                Route::get('/hpp', [KeuanganController::class, 'hpp']);
+                Route::get('/alokasi-kas', [KeuanganController::class, 'alokasiKas']);
+                Route::get('/laporan', [KeuanganController::class, 'laporan']);
+            });
         });
     });
 });

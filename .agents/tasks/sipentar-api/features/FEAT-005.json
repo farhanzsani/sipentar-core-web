@@ -2,7 +2,7 @@
   "id": "FEAT-005",
   "type": "feat",
   "description": "FASE 4 - Panen (all roles): Implement /api/v1/panen CRUD for jadwal and hasil. Panen status: terjadwal (berat_kg nullable) or selesai (berat_kg required). Validate: unique meja_id+tanggal_panen combination (via budidaya.meja_id); tanggal_panen >= budidaya.tanggal_semai; berat_kg required when status selesai. Filters: budidaya_id, meja_id (via budidaya), status, from/to. PanenController; PanenStoreRequest, PanenUpdateRequest; PanenResource. Tests verify uniqueness validation (two panen same meja same date fails), status transitions (terjadwal->selesai requires berat_kg), tanggal_panen validation, filters, both roles access.",
-  "status": "pending",
+  "status": "completed",
   "steps": [
     "Update app/Models/Panen.php: add belongsTo relationship for budidaya (Budidaya::class), add hasMany relationship for transaksiKeuangans (TransaksiKeuangan::class)",
     "Update app/Models/Budidaya.php: add hasMany relationship for panens (Panen::class)",
@@ -34,5 +34,5 @@
     "Manual test: create budidaya with tanggal_semai=2024-01-10, attempt to create panen with tanggal_panen=2024-01-05, verify 422 error"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "Completed successfully. All 40 tests passing. Database migration updated to make berat_kg nullable. PHPUnit config updated to use MySQL (pdo_sqlite not available in environment). PanenFactory corrected from Budidayas to Budidaya class name. All acceptance criteria met: CRUD endpoints working, status validation (terjadwal allows null berat_kg, selesai requires berat_kg), uniqueness validation (meja_id + tanggal_panen via budidaya relation), date validation (tanggal_panen >= tanggal_semai), filters (budidaya_id, meja_id via whereHas, status, from/to date range), both roles access verified, eager loading implemented to prevent N+1 queries."
 }
