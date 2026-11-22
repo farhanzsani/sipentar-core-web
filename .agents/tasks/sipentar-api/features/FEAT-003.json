@@ -1,0 +1,43 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "FASE 2 - Budidaya dan Meja Tanam (all roles): Implement /api/v1/budidaya CRUD (auto-fill user_id from auth; validate jumlah_tanaman <= meja kapasitas_lubang; validate tanggal_semai not future; add hss accessor = days since tanggal_semai; filters: meja_id, status, from/to dates) and /api/v1/meja-tanam GET list. Create BudidayaService to auto-update meja status (terisi when budidaya berjalan exists, kosong otherwise). BudidayaController, MejaTanamController; BudidayaStoreRequest, BudidayaUpdateRequest; BudidayaResource, MejaTanamResource. Tests verify HSS calculation, meja status updates, validation (capacity, future date), filters, role access (both pemilik and pegawai can access).",
+  "status": "pending",
+  "steps": [
+    "Create app/Services/BudidayaService.php with updateMejaStatus($mejaId) method: check if meja has any budidaya with status 'berjalan', set meja status to 'terisi' if yes else 'kosong'",
+    "Update app/Models/Budidaya.php: add hss accessor using Attribute that calculates now()->diffInDays($this->tanggal_semai) returning integer days since tanggal_semai",
+    "Create app/Http/Resources/Api/V1/BudidayaResource.php returning id, user_id, meja_id, tanggal_semai, jumlah_tanaman, status, hss (from accessor), user (nested UserResource), meja (nested MejaTanamResource), created_at, updated_at",
+    "Create app/Http/Resources/Api/V1/MejaTanamResource.php returning id, nomor_meja, kapasitas_lubang, status, created_at, updated_at",
+    "Create app/Http/Requests/Api/V1/BudidayaStoreRequest.php validating meja_id (required, exists:meja_tanams,id), tanggal_semai (required, date, before_or_equal:today), jumlah_tanaman (required, integer, min:1), status (required, in:berjalan,selesai); add custom rule in after() validation to check jumlah_tanaman <= meja.kapasitas_lubang; auto-merge user_id from auth()->id() in validated()",
+    "Create app/Http/Requests/Api/V1/BudidayaUpdateRequest.php with same validation as Store",
+    "Create app/Http/Controllers/Api/V1/BudidayaController.php with index() supporting filters ?meja_id, ?status, ?from, ?to (eager load user, meja), store(BudidayaStoreRequest, BudidayaService) calls service->updateMejaStatus after save, show($id) eager loads relations, update($id, BudidayaUpdateRequest, BudidayaService) calls service after update",
+    "Create app/Http/Controllers/Api/V1/MejaTanamController.php with index() returning paginated MejaTanamResource collection",
+    "Add routes in routes/api.php under /api/v1 prefix with auth:sanctum middleware (NO role restriction, all authenticated users): GET /budidaya, POST /budidaya, GET /budidaya/{id}, PUT /budidaya/{id}, GET /meja-tanam",
+    "Create tests/Feature/Api/V1/BudidayaTest.php: test pemilik and pegawai can access all endpoints, hss calculated correctly for various tanggal_semai dates, meja status updates to terisi when budidaya berjalan created, meja status updates to kosong when last budidaya berjalan changed to selesai, validation error when jumlah_tanaman exceeds kapasitas_lubang, validation error for future tanggal_semai, filters work (meja_id, status, date range), eager loading (no N+1)",
+    "Create tests/Feature/Api/V1/MejaTanamTest.php: test authenticated users can list meja_tanam, pagination works, returns correct structure"
+  ],
+  "acceptance_criteria": [
+    "GET /api/v1/budidaya returns paginated list with hss calculated for each record",
+    "POST /api/v1/budidaya creates budidaya with user_id from auth, updates meja status to terisi",
+    "PUT /api/v1/budidaya/{id} updates budidaya, updates meja status accordingly",
+    "GET /api/v1/meja-tanam returns paginated list of all meja",
+    "hss accessor returns correct number of days from tanggal_semai to today",
+    "Meja status automatically updates: terisi when has berjalan budidaya, kosong when none",
+    "Validation prevents jumlah_tanaman > kapasitas_lubang",
+    "Validation prevents tanggal_semai in future",
+    "Filters work: ?meja_id, ?status, ?from, ?to",
+    "Both pemilik and pegawai can access all endpoints (no 403)",
+    "Eager loading prevents N+1 queries",
+    "Response format follows standard"
+  ],
+  "verification": [
+    "php artisan test --filter=BudidayaTest (all tests pass including HSS calculation, meja status updates, validations)",
+    "php artisan test --filter=MejaTanamTest (all tests pass)",
+    "Manual test: POST /budidaya with valid data, verify meja status becomes 'terisi' in database",
+    "Manual test: PUT /budidaya/{id} change status to 'selesai', verify meja status becomes 'kosong' if no other berjalan budidaya",
+    "Manual test: GET /budidaya, verify hss values are correct (compare with tanggal_semai dates)",
+    "Manual test: login as pegawai, verify can access all budidaya endpoints"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

@@ -1,0 +1,7 @@
+{
+  "task_id": "task-sipentar-api",
+  "task_description": "Implement complete SIPENTAR REST API (Fase 0-5) for Laravel 13 hydroponic greenhouse management backend with role-based access, budidaya tracking, stock management, harvest scheduling, and financial transactions",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004", "FEAT-005", "FEAT-006"],
+  "blocked_reason": null
+}

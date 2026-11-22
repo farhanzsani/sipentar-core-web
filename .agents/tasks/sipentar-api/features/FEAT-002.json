@@ -1,0 +1,39 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "FASE 1 - Akun dan Karyawan (pemilik only): Implement /api/v1/profil GET+PUT (pemilik updates own profile with nama, username, optional password) and /api/v1/karyawan CRUD (list GET shows only pegawai role users; POST/PUT auto-assigns pegawai role; username unique validation; password hashing). Create ProfilController, KaryawanController; ProfilUpdateRequest, KaryawanStoreRequest, KaryawanUpdateRequest; UserResource (already exists); apply role:pemilik middleware. Feature tests verify 403 for pegawai accessing these endpoints, successful CRUD operations, validation errors.",
+  "status": "pending",
+  "steps": [
+    "Create app/Http/Controllers/Api/V1/ProfilController.php with show() returning authenticated user via UserResource, and update(ProfilUpdateRequest) updating nama, username, and optional password (only hash if provided)",
+    "Create app/Http/Requests/Api/V1/ProfilUpdateRequest.php validating nama (required, string, max:100), username (required, string, max:50, unique:users,username except current user id), password (nullable, string, min:8)",
+    "Create app/Http/Controllers/Api/V1/KaryawanController.php with index() (paginated list of pegawai users), store(KaryawanStoreRequest), show($id), update($id, KaryawanUpdateRequest) - all return UserResource, auto-assign role pegawai on store",
+    "Create app/Http/Requests/Api/V1/KaryawanStoreRequest.php validating nama (required, string, max:100), username (required, string, max:50, unique:users), password (required, string, min:8), auto-merge role as 'pegawai' in validated()",
+    "Create app/Http/Requests/Api/V1/KaryawanUpdateRequest.php validating nama (required, string, max:100), username (required, string, max:50, unique:users,username except $id), password (nullable, string, min:8)",
+    "Add routes in routes/api.php under /api/v1 prefix with auth:sanctum and role:pemilik middleware: GET /profil, PUT /profil, GET /karyawan, POST /karyawan, GET /karyawan/{id}, PUT /karyawan/{id}",
+    "Create tests/Feature/Api/V1/ProfilTest.php: test pemilik can view and update own profile, pegawai gets 403, validation errors for invalid data, password update works, username uniqueness",
+    "Create tests/Feature/Api/V1/KaryawanTest.php: test pemilik can list/create/show/update karyawan, pegawai gets 403 on all endpoints, karyawan auto-assigned pegawai role, username uniqueness, password hashing, index only shows pegawai role users, pagination works"
+  ],
+  "acceptance_criteria": [
+    "GET /api/v1/profil returns authenticated pemilik's profile",
+    "PUT /api/v1/profil updates pemilik profile including optional password change",
+    "GET /api/v1/karyawan returns paginated list of only pegawai role users",
+    "POST /api/v1/karyawan creates user with pegawai role automatically",
+    "PUT /api/v1/karyawan/{id} updates karyawan with optional password",
+    "All karyawan endpoints return 403 when accessed by pegawai role",
+    "Profil endpoints return 403 when accessed by pegawai role",
+    "Username uniqueness validated on create and update",
+    "Password is hashed when stored",
+    "Response format follows {success, message, data, errors} standard",
+    "All messages in Bahasa Indonesia"
+  ],
+  "verification": [
+    "php artisan test --filter=ProfilTest (all profil tests pass)",
+    "php artisan test --filter=KaryawanTest (all karyawan tests pass)",
+    "Manual test: login as pemilik, GET /profil returns data",
+    "Manual test: login as pemilik, POST /karyawan creates pegawai user",
+    "Manual test: login as pegawai (created above), GET /profil returns 403",
+    "Manual test: login as pegawai, GET /karyawan returns 403"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

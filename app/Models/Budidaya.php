@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Budidaya extends Model
 {
@@ -40,11 +41,21 @@ class Budidaya extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(User::class);
     }
 
     public function meja(): BelongsTo
     {
-        return $this->belongsTo(MejaTanams::class);
+        return $this->belongsTo(MejaTanam::class);
+    }
+
+    public function panens(): HasMany
+    {
+        return $this->hasMany(Panen::class);
+    }
+
+    public function diagnosis(): HasMany
+    {
+        return $this->hasMany(Diagnosis::class);
     }
 }

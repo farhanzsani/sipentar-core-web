@@ -10,7 +10,7 @@ beforeEach(function () {
     $this->user = User::factory()->create([
         'username' => 'testuser',
         'password' => 'password123', // Model will hash this via 'hashed' cast
-        'role' => UserRole::KARYAWAN,
+        'role' => UserRole::PEGAWAI,
     ]);
 });
 
@@ -111,7 +111,7 @@ test('admin can login', function () {
         ->assertJson([
             'success' => true,
             'data' => [
-                'user' => ['role' => 'admin'],
+                'user' => ['role' => 'pemilik'],
             ],
         ]);
 });

@@ -1,0 +1,38 @@
+{
+  "id": "FEAT-005",
+  "type": "feat",
+  "description": "FASE 4 - Panen (all roles): Implement /api/v1/panen CRUD for jadwal and hasil. Panen status: terjadwal (berat_kg nullable) or selesai (berat_kg required). Validate: unique meja_id+tanggal_panen combination (via budidaya.meja_id); tanggal_panen >= budidaya.tanggal_semai; berat_kg required when status selesai. Filters: budidaya_id, meja_id (via budidaya), status, from/to. PanenController; PanenStoreRequest, PanenUpdateRequest; PanenResource. Tests verify uniqueness validation (two panen same meja same date fails), status transitions (terjadwal->selesai requires berat_kg), tanggal_panen validation, filters, both roles access.",
+  "status": "pending",
+  "steps": [
+    "Update app/Models/Panen.php: add belongsTo relationship for budidaya (Budidaya::class), add hasMany relationship for transaksiKeuangans (TransaksiKeuangan::class)",
+    "Update app/Models/Budidaya.php: add hasMany relationship for panens (Panen::class)",
+    "Create app/Http/Resources/Api/V1/PanenResource.php returning id, budidaya_id, tanggal_panen, berat_kg, status, budidaya (nested BudidayaResource with meja data), created_at, updated_at",
+    "Create app/Http/Requests/Api/V1/PanenStoreRequest.php validating budidaya_id (required, exists:budidayas,id), tanggal_panen (required, date), berat_kg (nullable if status terjadwal, required_if:status,selesai, numeric, min:0.01), status (required, in:terjadwal,selesai); add after() validation: 1) check tanggal_panen >= budidaya.tanggal_semai, 2) check no existing panen with same budidaya.meja_id and tanggal_panen (query Panen with budidaya relation)",
+    "Create app/Http/Requests/Api/V1/PanenUpdateRequest.php with same validation as Store but check uniqueness excluding current panen id",
+    "Create app/Http/Controllers/Api/V1/PanenController.php with index() supporting filters ?budidaya_id, ?status, ?from, ?to (for tanggal_panen), eager load budidaya.meja and budidaya.user; add filter ?meja_id using whereHas('budidaya', fn($q) => $q->where('meja_id', $mejaId)); store(PanenStoreRequest), show($id) with eager loading, update($id, PanenUpdateRequest)",
+    "Add routes in routes/api.php under /api/v1 prefix with auth:sanctum (all roles): GET /panen, POST /panen, GET /panen/{id}, PUT /panen/{id}",
+    "Create tests/Feature/Api/V1/PanenTest.php: test pemilik and pegawai can access all endpoints, POST with status terjadwal and null berat_kg succeeds, POST with status selesai requires berat_kg, PUT from terjadwal to selesai requires berat_kg, validation error when two panen have same meja_id (via budidaya) and tanggal_panen, validation error when tanggal_panen < budidaya.tanggal_semai, filters work (budidaya_id, meja_id via relation, status, date range), eager loading works"
+  ],
+  "acceptance_criteria": [
+    "GET /api/v1/panen returns paginated list with filters working",
+    "POST /api/v1/panen creates panen with status terjadwal (berat_kg null)",
+    "POST /api/v1/panen creates panen with status selesai (berat_kg required)",
+    "PUT /api/v1/panen/{id} updates panen, validates berat_kg when status selesai",
+    "Validation prevents two panen on same meja (via budidaya.meja_id) and tanggal_panen",
+    "Validation prevents tanggal_panen before budidaya.tanggal_semai",
+    "Validation requires berat_kg when status is selesai",
+    "Filters work: ?budidaya_id, ?meja_id (via budidaya relation), ?status, ?from, ?to",
+    "Both pemilik and pegawai can access all endpoints",
+    "Eager loading prevents N+1 queries (budidaya.meja, budidaya.user)",
+    "Response format follows standard"
+  ],
+  "verification": [
+    "php artisan test --filter=PanenTest (all tests pass including uniqueness validation, status transitions, date validations)",
+    "Manual test: create budidaya with meja_id=1, create panen for that budidaya with tanggal_panen=2024-01-15, attempt to create another panen for different budidaya with same meja_id=1 and tanggal_panen=2024-01-15, verify 422 error",
+    "Manual test: create panen with status=terjadwal and no berat_kg, verify success",
+    "Manual test: attempt to create panen with status=selesai and no berat_kg, verify 422 error",
+    "Manual test: create budidaya with tanggal_semai=2024-01-10, attempt to create panen with tanggal_panen=2024-01-05, verify 422 error"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

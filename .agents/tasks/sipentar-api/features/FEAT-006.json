@@ -1,0 +1,43 @@
+{
+  "id": "FEAT-006",
+  "type": "feat",
+  "description": "FASE 5 - Keuangan (pemilik only): Implement /api/v1/transaksi-keuangan CRUD (server calculates kas_operasional = jumlah × persentase_kas / 100, laba_bersih = jumlah - kas_operasional for pemasukan; persentase_kas validated between env CASH_ALLOCATION_MIN and MAX; for pengeluaran these fields nullable); /api/v1/keuangan/hpp GET (?lubang or ?panen_id, calculates HPP_PER_HOLE × lubang from env/config); /api/v1/keuangan/alokasi-kas GET (?tanggal, returns total pemasukan and kas_operasional for date); /api/v1/keuangan/laporan GET (?from&to, returns totals for pemasukan, pengeluaran, kas_operasional, laba_bersih). Create KeuanganService using bcmath for money calculations. All endpoints role:pemilik middleware. Tests verify calculations, pegawai 403, validations.",
+  "status": "pending",
+  "steps": [
+    "Create app/Services/KeuanganService.php with methods: 1) calculateKasOperasional($jumlah, $persentaseKas) using bcmul/bcdiv returning string; 2) calculateLabaBersih($jumlah, $kasOperasional) using bcsub returning string; 3) calculateHpp($lubang) reading config('sipentar.hpp_per_hole') and bcmul returning string; 4) getAlokasiKas($tanggal) querying TransaksiKeuangan where jenis=pemasukan and tanggal=$tanggal, returning ['total_pemasukan' => bcadd sum, 'total_kas_operasional' => bcadd sum]; 5) getLaporan($from, $to) querying TransaksiKeuangan in date range, returning ['total_pemasukan' => sum where jenis=pemasukan, 'total_pengeluaran' => sum where jenis=pengeluaran, 'total_kas_operasional' => sum kas_operasional, 'total_laba_bersih' => sum laba_bersih] using bcadd for precision",
+    "Create app/Http/Requests/Api/V1/TransaksiKeuanganStoreRequest.php validating jenis (required, in:pemasukan,pengeluaran), tanggal (required, date), jumlah (required, numeric, min:0.01), panen_id (nullable, exists:panens,id), persentase_kas (required_if:jenis,pemasukan, nullable, numeric, between:config min and max from config('sipentar.cash_allocation.min') and max), keterangan (nullable, string, max:255); auto-merge user_id from auth()->id() in validated(); in after() validation: if jenis=pemasukan, calculate and merge kas_operasional and laba_bersih using KeuanganService injected via constructor",
+    "Create app/Http/Requests/Api/V1/TransaksiKeuanganUpdateRequest.php with same validation and calculation as Store",
+    "Create app/Http/Resources/Api/V1/TransaksiKeuanganResource.php returning id, user_id, panen_id, jenis, tanggal, jumlah, persentase_kas, kas_operasional, laba_bersih, keterangan, user (nested UserResource), panen (conditional nested PanenResource when panen_id exists), created_at, updated_at",
+    "Create app/Http/Controllers/Api/V1/TransaksiKeuanganController.php injecting KeuanganService, with index() supporting filters ?jenis, ?from, ?to, eager loading user and panen; store(TransaksiKeuanganStoreRequest) creates record (calculations already in request); show($id) with eager loading; update($id, TransaksiKeuanganUpdateRequest)",
+    "Create app/Http/Controllers/Api/V1/KeuanganController.php injecting KeuanganService: 1) hpp(Request $request) validates ?lubang (nullable, integer, min:1) or ?panen_id (nullable, exists:panens,id), if panen_id get budidaya.jumlah_tanaman as lubang, if neither use sum of MejaTanam::sum('kapasitas_lubang'), call service->calculateHpp($lubang), return {success, message, data: {lubang, hpp_per_hole: config value, total_hpp}}; 2) alokasiKas(Request $request) validates ?tanggal (required, date), call service->getAlokasiKas($tanggal), return result; 3) laporan(Request $request) validates ?from (required, date), ?to (required, date, after_or_equal:from), call service->getLaporan($from, $to), return result",
+    "Add routes in routes/api.php under /api/v1 prefix with auth:sanctum and role:pemilik middleware: GET /transaksi-keuangan, POST /transaksi-keuangan, GET /transaksi-keuangan/{id}, PUT /transaksi-keuangan/{id}, GET /keuangan/hpp, GET /keuangan/alokasi-kas, GET /keuangan/laporan",
+    "Create tests/Feature/Api/V1/TransaksiKeuanganTest.php: test pemilik can CRUD transaksi, pegawai gets 403 on all endpoints, pemasukan auto-calculates kas_operasional and laba_bersih correctly using bcmath precision, pengeluaran allows null for financial fields, persentase_kas validated within config range, user_id auto-filled, filters work, eager loading works",
+    "Create tests/Feature/Api/V1/KeuanganTest.php: test pemilik can access all keuangan endpoints, pegawai gets 403, hpp calculation correct with ?lubang parameter (verify bcmath: 100 lubang × 1200 = 120000.00), hpp with ?panen_id uses budidaya.jumlah_tanaman, hpp without params uses total kapasitas_lubang from all meja, alokasiKas returns correct totals for given date, laporan returns correct totals for date range, all calculations use bcmath string precision"
+  ],
+  "acceptance_criteria": [
+    "POST /api/v1/transaksi-keuangan with jenis=pemasukan auto-calculates kas_operasional and laba_bersih",
+    "POST /api/v1/transaksi-keuangan with jenis=pengeluaran allows null financial fields",
+    "persentase_kas validated between CASH_ALLOCATION_MIN and MAX from config",
+    "GET /api/v1/keuangan/hpp?lubang=100 returns correct HPP (100 × 1200)",
+    "GET /api/v1/keuangan/hpp?panen_id=X uses budidaya.jumlah_tanaman for calculation",
+    "GET /api/v1/keuangan/hpp without params uses total meja kapasitas_lubang",
+    "GET /api/v1/keuangan/alokasi-kas?tanggal=YYYY-MM-DD returns total pemasukan and kas_operasional for that date",
+    "GET /api/v1/keuangan/laporan?from=X&to=Y returns totals for all financial fields in range",
+    "All financial calculations use bcmath (bcmul, bcdiv, bcadd, bcsub) for precision",
+    "All keuangan endpoints return 403 when accessed by pegawai",
+    "user_id auto-filled from authenticated user",
+    "Filters work on transaksi-keuangan (?jenis, ?from, ?to)",
+    "Response format follows standard"
+  ],
+  "verification": [
+    "php artisan test --filter=TransaksiKeuanganTest (all tests pass including auto-calculations and role restrictions)",
+    "php artisan test --filter=KeuanganTest (all tests pass including HPP calculations and aggregations)",
+    "Manual test: login as pemilik, POST /transaksi-keuangan with jenis=pemasukan, jumlah=1000000, persentase_kas=35, verify response kas_operasional=350000.00 and laba_bersih=650000.00",
+    "Manual test: GET /keuangan/hpp?lubang=500, verify total_hpp=600000.00 (500×1200)",
+    "Manual test: create panen with budidaya having jumlah_tanaman=400, GET /keuangan/hpp?panen_id={id}, verify total_hpp=480000.00",
+    "Manual test: login as pegawai, attempt GET /transaksi-keuangan, verify 403",
+    "Manual test: create 3 pemasukan transaksi on same date, GET /keuangan/alokasi-kas?tanggal={date}, verify totals sum correctly"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

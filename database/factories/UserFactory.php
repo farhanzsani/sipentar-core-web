@@ -14,14 +14,14 @@ class UserFactory extends Factory
             'nama' => fake()->name(),
             'username' => fake()->unique()->userName(),
             'password' => Hash::make('password'),
-            'role' => UserRole::KARYAWAN,
+            'role' => UserRole::PEGAWAI,
         ];
     }
 
     public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => UserRole::ADMIN,
+            'role' => UserRole::PEMILIK,
         ]);
     }
 }

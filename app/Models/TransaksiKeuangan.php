@@ -48,11 +48,11 @@ class TransaksiKeuangan extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(User::class);
     }
 
     public function panen(): BelongsTo
     {
-        return $this->belongsTo(Panens::class);
+        return $this->belongsTo(Panen::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MejaTanam extends Model
 {
@@ -30,5 +31,10 @@ class MejaTanam extends Model
         return [
             'id' => 'integer',
         ];
+    }
+
+    public function budidayas(): HasMany
+    {
+        return $this->hasMany(Budidaya::class, 'meja_id');
     }
 }

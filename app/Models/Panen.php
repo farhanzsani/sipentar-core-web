@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Panen extends Model
 {
@@ -39,6 +40,11 @@ class Panen extends Model
 
     public function budidaya(): BelongsTo
     {
-        return $this->belongsTo(Budidayas::class);
+        return $this->belongsTo(Budidaya::class);
+    }
+
+    public function transaksiKeuangans(): HasMany
+    {
+        return $this->hasMany(TransaksiKeuangan::class);
     }
 }

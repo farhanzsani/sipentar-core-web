@@ -1,0 +1,48 @@
+{
+  "id": "FEAT-004",
+  "type": "feat",
+  "description": "FASE 3 - Stok, Penggunaan Operasional, Notifikasi (all roles): Implement /api/v1/stok CRUD (add is_low accessor: jumlah_stok <= batas_minimum); /api/v1/penggunaan-operasional GET+POST (POST uses DB transaction to reduce stok.jumlah_stok, validates sufficient stock, auto-fills user_id; filters: stok_id, from/to); /api/v1/notifikasi GET (calculated from stok where is_low, no separate table). Create StokService with reduceStock($stokId, $jumlah) method. StokController, PenggunaanOperasionalController with StokService injection, NotifikasiController; requests and resources. Tests verify stock reduction in transaction, validation for insufficient stock, is_low flag, notifikasi calculation, filters.",
+  "status": "pending",
+  "steps": [
+    "Update app/Models/Stok.php: add is_low accessor using Attribute returning boolean ($this->jumlah_stok <= $this->batas_minimum)",
+    "Update app/Models/PenggunaanOperasional.php: add relationship belongsTo for stok (Stok::class) and user (User::class)",
+    "Update app/Models/Stok.php: add hasMany relationship for penggunaanOperasionals",
+    "Create app/Services/StokService.php with reduceStock($stokId, $jumlah) method: uses DB::transaction, finds stok, checks jumlah_stok >= $jumlah (throw ValidationException if insufficient with message 'Stok tidak mencukupi.'), decrements jumlah_stok, saves, returns updated stok",
+    "Create app/Http/Resources/Api/V1/StokResource.php returning id, nama_bahan, kategori, satuan, jumlah_stok, batas_minimum, is_low (from accessor), created_at, updated_at",
+    "Create app/Http/Resources/Api/V1/PenggunaanOperasionalResource.php returning id, user_id, stok_id, tanggal, jumlah, keterangan, user (nested UserResource), stok (nested StokResource), created_at, updated_at",
+    "Create app/Http/Requests/Api/V1/StokStoreRequest.php validating nama_bahan (required, string, max:100), kategori (required, string, max:50), satuan (required, string, max:20), jumlah_stok (required, numeric, min:0), batas_minimum (required, numeric, min:0)",
+    "Create app/Http/Requests/Api/V1/StokUpdateRequest.php with same validation as Store",
+    "Create app/Http/Requests/Api/V1/PenggunaanOperasionalStoreRequest.php validating stok_id (required, exists:stoks,id), tanggal (required, date), jumlah (required, numeric, min:0.01), keterangan (nullable, string, max:255); auto-merge user_id from auth()->id() in validated()",
+    "Create app/Http/Controllers/Api/V1/StokController.php with index() paginated with is_low in resource, store(StokStoreRequest), show($id), update($id, StokUpdateRequest)",
+    "Create app/Http/Controllers/Api/V1/PenggunaanOperasionalController.php injecting StokService, with index() supporting filters ?stok_id, ?from, ?to, eager loading user and stok; store(PenggunaanOperasionalStoreRequest, StokService) calls service->reduceStock($validated['stok_id'], $validated['jumlah']) then creates PenggunaanOperasional record",
+    "Create app/Http/Controllers/Api/V1/NotifikasiController.php with index() querying Stok::whereRaw('jumlah_stok <= batas_minimum')->get() and returning collection of objects with format {id, nama_bahan, kategori, jumlah_stok, batas_minimum, message: 'Stok {nama_bahan} rendah. Sisa: {jumlah_stok} {satuan}'}",
+    "Add routes in routes/api.php under /api/v1 prefix with auth:sanctum (all roles): GET /stok, POST /stok, GET /stok/{id}, PUT /stok/{id}, GET /penggunaan-operasional, POST /penggunaan-operasional, GET /notifikasi",
+    "Create tests/Feature/Api/V1/StokTest.php: test CRUD operations work, is_low flag is true when jumlah_stok <= batas_minimum and false otherwise, both roles can access",
+    "Create tests/Feature/Api/V1/PenggunaanOperasionalTest.php: test list with filters works, POST reduces stok.jumlah_stok in database, POST returns 422 when jumlah exceeds available stok, user_id auto-filled, transaction rollback on error, eager loading works",
+    "Create tests/Feature/Api/V1/NotifikasiTest.php: test returns only stok with jumlah_stok <= batas_minimum, returns empty when all stok above minimum, message format correct"
+  ],
+  "acceptance_criteria": [
+    "GET /api/v1/stok returns list with is_low flag for each stok",
+    "POST /api/v1/stok creates new stok record",
+    "PUT /api/v1/stok/{id} updates stok",
+    "GET /api/v1/penggunaan-operasional returns paginated list with filters working",
+    "POST /api/v1/penggunaan-operasional reduces stok.jumlah_stok in DB transaction",
+    "POST /api/v1/penggunaan-operasional returns 422 with 'Stok tidak mencukupi.' when insufficient",
+    "GET /api/v1/notifikasi returns only stok where jumlah_stok <= batas_minimum with formatted message",
+    "is_low accessor returns true when jumlah_stok <= batas_minimum",
+    "user_id auto-filled from authenticated user",
+    "Filters ?stok_id, ?from, ?to work on penggunaan-operasional",
+    "Both pemilik and pegawai can access all endpoints",
+    "DB transaction ensures atomicity of stock reduction"
+  ],
+  "verification": [
+    "php artisan test --filter=StokTest (all tests pass)",
+    "php artisan test --filter=PenggunaanOperasionalTest (all tests pass including stock reduction and insufficient stock validation)",
+    "php artisan test --filter=NotifikasiTest (all tests pass)",
+    "Manual test: create stok with jumlah_stok=10, POST penggunaan-operasional with jumlah=5, verify stok.jumlah_stok becomes 5",
+    "Manual test: POST penggunaan-operasional with jumlah > available stok, verify 422 error",
+    "Manual test: create stok with jumlah_stok=5, batas_minimum=10, GET /notifikasi includes this stok"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
