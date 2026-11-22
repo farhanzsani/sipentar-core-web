@@ -87,12 +87,13 @@ test('pemasukan calculation uses bcmath for precision', function () {
 
     $response->assertStatus(201);
 
-    // Manual calculation: 1234567.89 * 37.5 / 100 = 462962.96
-    // laba_bersih: 1234567.89 - 462962.96 = 771604.93
+    // Manual calculation with bcmath (truncate, not round):
+    // kas_operasional: 1234567.89 * 37.5 / 100 = 462962.95875 → truncate to 462962.95
+    // laba_bersih: 1234567.89 - 462962.95 = 771604.94
     $this->assertDatabaseHas('transaksi_keuangans', [
         'jumlah' => '1234567.89',
-        'kas_operasional' => '462962.96',
-        'laba_bersih' => '771604.93',
+        'kas_operasional' => '462962.95',
+        'laba_bersih' => '771604.94',
     ]);
 });
 

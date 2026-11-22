@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Panens;
-use App\Models\Users;
+use App\Models\Panen;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransaksiKeuanganFactory extends Factory
@@ -13,16 +13,18 @@ class TransaksiKeuanganFactory extends Factory
      */
     public function definition(): array
     {
+        $jenis = fake()->randomElement(['pemasukan', 'pengeluaran']);
+        
         return [
-            'user_id' => Users::factory(),
-            'panen_id' => Panens::factory(),
-            'jenis' => fake()->regexify('[A-Za-z0-9]{30}'),
+            'user_id' => User::factory(),
+            'panen_id' => null,
+            'jenis' => $jenis,
             'tanggal' => fake()->date(),
-            'jumlah' => fake()->randomFloat(2, 0, 999999999999.99),
-            'persentase_kas' => fake()->randomFloat(2, 0, 999.99),
-            'kas_operasional' => fake()->randomFloat(2, 0, 999999999999.99),
-            'laba_bersih' => fake()->randomFloat(2, 0, 999999999999.99),
-            'keterangan' => fake()->regexify('[A-Za-z0-9]{255}'),
+            'jumlah' => fake()->randomFloat(2, 10000, 5000000),
+            'persentase_kas' => $jenis === 'pemasukan' ? fake()->randomFloat(2, 30, 40) : null,
+            'kas_operasional' => null,
+            'laba_bersih' => null,
+            'keterangan' => fake()->sentence(),
         ];
     }
 }
