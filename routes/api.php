@@ -4,7 +4,10 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BudidayaController;
 use App\Http\Controllers\Api\V1\KaryawanController;
 use App\Http\Controllers\Api\V1\MejaTanamController;
+use App\Http\Controllers\Api\V1\NotifikasiController;
+use App\Http\Controllers\Api\V1\PenggunaanOperasionalController;
 use App\Http\Controllers\Api\V1\ProfilController;
+use App\Http\Controllers\Api\V1\StokController;
 use App\Http\Resources\Api\V1\UserResource;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +34,19 @@ Route::prefix('v1')->group(function () {
 
         // Meja Tanam endpoints - all authenticated users
         Route::get('/meja-tanam', [MejaTanamController::class, 'index']);
+
+        // Stok endpoints - all authenticated users
+        Route::get('/stok', [StokController::class, 'index']);
+        Route::post('/stok', [StokController::class, 'store']);
+        Route::get('/stok/{id}', [StokController::class, 'show']);
+        Route::put('/stok/{id}', [StokController::class, 'update']);
+
+        // Penggunaan Operasional endpoints - all authenticated users
+        Route::get('/penggunaan-operasional', [PenggunaanOperasionalController::class, 'index']);
+        Route::post('/penggunaan-operasional', [PenggunaanOperasionalController::class, 'store']);
+
+        // Notifikasi endpoints - all authenticated users
+        Route::get('/notifikasi', [NotifikasiController::class, 'index']);
 
         // Profil endpoints - pemilik only
         Route::middleware('role:pemilik')->group(function () {
