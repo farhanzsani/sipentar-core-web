@@ -67,7 +67,7 @@ class AuthController extends Controller
                                         new OA\Property(property: 'id', type: 'integer', example: 1),
                                         new OA\Property(property: 'nama', type: 'string', example: 'Super Admin'),
                                         new OA\Property(property: 'username', type: 'string', example: 'admin'),
-                                        new OA\Property(property: 'role', type: 'string', enum: ['admin', 'karyawan'], example: 'admin'),
+                                        new OA\Property(property: 'role', type: 'string', enum: ['pemilik', 'pegawai'], example: 'pemilik'),
                                     ]
                                 ),
                                 new OA\Property(property: 'token', type: 'string', example: '1|AbCdEfGhIjKlMnOpQrStUvWxYz'),

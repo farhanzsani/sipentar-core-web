@@ -82,10 +82,10 @@
                                                         },
                                                         "role": {
                                                             "type": "string",
-                                                            "example": "admin",
+                                                            "example": "pemilik",
                                                             "enum": [
-                                                                "admin",
-                                                                "karyawan"
+                                                                "pemilik",
+                                                                "pegawai"
                                                             ]
                                                         }
                                                     },
