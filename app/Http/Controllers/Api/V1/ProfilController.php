@@ -20,7 +20,29 @@ class ProfilController extends Controller
         security: [['bearerAuth' => []]],
         tags: ['Profil'],
         responses: [
-            new OA\Response(response: 200, description: 'Profil berhasil diambil'),
+            new OA\Response(
+                response: 200, 
+                description: 'Profil berhasil diambil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data profil berhasil diambil.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'nama', type: 'string', example: 'John Doe'),
+                                new OA\Property(property: 'username', type: 'string', example: 'johndoe'),
+                                new OA\Property(property: 'email', type: 'string', example: 'john@example.com'),
+                                new OA\Property(property: 'role', type: 'string', example: 'pemilik'),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:00:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:00:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 401, description: 'Unauthenticated')
         ]
     )]
@@ -49,7 +71,29 @@ class ProfilController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Profil berhasil diperbarui'),
+            new OA\Response(
+                response: 200, 
+                description: 'Profil berhasil diperbarui',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Profil berhasil diperbarui.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'nama', type: 'string', example: 'John Doe Updated'),
+                                new OA\Property(property: 'username', type: 'string', example: 'johndoe'),
+                                new OA\Property(property: 'email', type: 'string', example: 'john@example.com'),
+                                new OA\Property(property: 'role', type: 'string', example: 'pemilik'),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 422, description: 'Validation error'),
             new OA\Response(response: 401, description: 'Unauthenticated')
         ]
