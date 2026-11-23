@@ -38,9 +38,9 @@ class KeuanganController extends Controller
                         new OA\Property(
                             property: 'data',
                             properties: [
-                                new OA\Property(property: 'lubang', type: 'integer', example: 100),
-                                new OA\Property(property: 'hpp_per_lubang', type: 'string', example: '1200'),
-                                new OA\Property(property: 'total_hpp', type: 'string', example: '120000.00')
+                                new OA\Property(property: 'lubang', type: 'integer', example: 100, description: 'Jumlah lubang tanam yang digunakan untuk kalkulasi'),
+                                new OA\Property(property: 'hpp_per_lubang', type: 'string', example: '1200', description: 'Harga Pokok Produksi per lubang tanam'),
+                                new OA\Property(property: 'total_hpp', type: 'string', example: '120000.00', description: 'Total Harga Pokok Produksi untuk semua lubang')
                             ],
                             type: 'object'
                         )
@@ -93,9 +93,9 @@ class KeuanganController extends Controller
                         new OA\Property(
                             property: 'data',
                             properties: [
-                                new OA\Property(property: 'tanggal', type: 'string', format: 'date', example: '2026-11-22'),
-                                new OA\Property(property: 'total_pemasukan', type: 'string', example: '1500000.00'),
-                                new OA\Property(property: 'total_kas_operasional', type: 'string', example: '550000.00')
+                                new OA\Property(property: 'tanggal', type: 'string', format: 'date', example: '2026-11-22', description: 'Tanggal yang diminta'),
+                                new OA\Property(property: 'total_pemasukan', type: 'string', example: '1500000.00', description: 'Total pemasukan pada tanggal tersebut'),
+                                new OA\Property(property: 'total_kas_operasional', type: 'string', example: '550000.00', description: 'Total kas operasional yang dialokasikan')
                             ],
                             type: 'object'
                         )
@@ -148,11 +148,11 @@ class KeuanganController extends Controller
                                     ],
                                     type: 'object'
                                 ),
-                                new OA\Property(property: 'total_pemasukan', type: 'string', example: '2000000.00'),
-                                new OA\Property(property: 'total_pengeluaran', type: 'string', example: '800000.00'),
-                                new OA\Property(property: 'total_kas_operasional', type: 'string', example: '700000.00'),
-                                new OA\Property(property: 'total_laba_bersih', type: 'string', example: '1300000.00'),
-                                new OA\Property(property: 'selisih', type: 'string', example: '1200000.00', description: 'Pemasukan - Pengeluaran')
+                                new OA\Property(property: 'total_pemasukan', type: 'string', example: '2000000.00', description: 'Total semua pemasukan dalam periode'),
+                                new OA\Property(property: 'total_pengeluaran', type: 'string', example: '800000.00', description: 'Total semua pengeluaran dalam periode'),
+                                new OA\Property(property: 'total_kas_operasional', type: 'string', example: '700000.00', description: 'Total kas operasional dari pemasukan'),
+                                new OA\Property(property: 'total_laba_bersih', type: 'string', example: '1300000.00', description: 'Total laba bersih dari pemasukan'),
+                                new OA\Property(property: 'selisih', type: 'string', example: '1200000.00', description: 'Selisih pemasukan dikurangi pengeluaran')
                             ],
                             type: 'object'
                         )

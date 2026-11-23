@@ -300,7 +300,172 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data budidaya berhasil diambil"
+                        "description": "Data budidaya berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data budidaya berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "meja_id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "tanggal_semai": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2026-11-01"
+                                                            },
+                                                            "jumlah_tanaman": {
+                                                                "type": "integer",
+                                                                "example": 50
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "berjalan"
+                                                            },
+                                                            "hss": {
+                                                                "type": "integer",
+                                                                "example": 14
+                                                            },
+                                                            "user": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "nama": {
+                                                                        "type": "string",
+                                                                        "example": "Budi Santoso"
+                                                                    },
+                                                                    "username": {
+                                                                        "type": "string",
+                                                                        "example": "budi_santoso"
+                                                                    },
+                                                                    "role": {
+                                                                        "type": "string",
+                                                                        "example": "pegawai"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "meja": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 2
+                                                                    },
+                                                                    "nomor_meja": {
+                                                                        "type": "integer",
+                                                                        "example": 2
+                                                                    },
+                                                                    "kapasitas_lubang": {
+                                                                        "type": "integer",
+                                                                        "example": 60
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "example": "digunakan"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/budidaya?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/budidaya?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/budidaya?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -353,7 +518,120 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Budidaya berhasil dibuat"
+                        "description": "Budidaya berhasil dibuat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Budidaya berhasil dibuat."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "meja_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tanggal_semai": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-01"
+                                                },
+                                                "jumlah_tanaman": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "berjalan"
+                                                },
+                                                "hss": {
+                                                    "type": "integer",
+                                                    "example": 14
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Budi Santoso"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "budi_santoso"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pegawai"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meja": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "nomor_meja": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "kapasitas_lubang": {
+                                                            "type": "integer",
+                                                            "example": 60
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "digunakan"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -385,7 +663,120 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data budidaya berhasil diambil"
+                        "description": "Data budidaya berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data budidaya berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "meja_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tanggal_semai": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-01"
+                                                },
+                                                "jumlah_tanaman": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "berjalan"
+                                                },
+                                                "hss": {
+                                                    "type": "integer",
+                                                    "example": 14
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Budi Santoso"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "budi_santoso"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pegawai"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meja": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "nomor_meja": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "kapasitas_lubang": {
+                                                            "type": "integer",
+                                                            "example": 60
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "digunakan"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Not found"
@@ -444,7 +835,120 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Budidaya berhasil diperbarui"
+                        "description": "Budidaya berhasil diperbarui",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Budidaya berhasil diperbarui."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "meja_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tanggal_semai": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-01"
+                                                },
+                                                "jumlah_tanaman": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "berjalan"
+                                                },
+                                                "hss": {
+                                                    "type": "integer",
+                                                    "example": 14
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Budi Santoso"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "budi_santoso"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pegawai"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meja": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "nomor_meja": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "kapasitas_lubang": {
+                                                            "type": "integer",
+                                                            "example": 60
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "digunakan"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -480,7 +984,97 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Daftar karyawan berhasil diambil"
+                        "description": "Daftar karyawan berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data karyawan berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "nama": {
+                                                                "type": "string",
+                                                                "example": "Budi Santoso"
+                                                            },
+                                                            "username": {
+                                                                "type": "string",
+                                                                "example": "budi_santoso"
+                                                            },
+                                                            "role": {
+                                                                "type": "string",
+                                                                "example": "pegawai"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/karyawan?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/karyawan?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/karyawan?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "403": {
                         "description": "Forbidden"
@@ -527,7 +1121,45 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Karyawan berhasil ditambahkan"
+                        "description": "Karyawan berhasil ditambahkan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Karyawan berhasil ditambahkan."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "nama": {
+                                                    "type": "string",
+                                                    "example": "Siti Rahayu"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "siti_rahayu"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "pegawai"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -562,7 +1194,45 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data karyawan berhasil diambil"
+                        "description": "Data karyawan berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data karyawan berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama": {
+                                                    "type": "string",
+                                                    "example": "Budi Santoso"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "budi_santoso"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "pegawai"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Not found"
@@ -622,7 +1292,45 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Karyawan berhasil diperbarui"
+                        "description": "Karyawan berhasil diperbarui",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Karyawan berhasil diperbarui."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama": {
+                                                    "type": "string",
+                                                    "example": "Budi Santoso"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "budi_santoso"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "pegawai"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -684,14 +1392,17 @@
                                         "data": {
                                             "properties": {
                                                 "lubang": {
+                                                    "description": "Jumlah lubang tanam yang digunakan untuk kalkulasi",
                                                     "type": "integer",
                                                     "example": 100
                                                 },
                                                 "hpp_per_lubang": {
+                                                    "description": "Harga Pokok Produksi per lubang tanam",
                                                     "type": "string",
                                                     "example": "1200"
                                                 },
                                                 "total_hpp": {
+                                                    "description": "Total Harga Pokok Produksi untuk semua lubang",
                                                     "type": "string",
                                                     "example": "120000.00"
                                                 }
@@ -755,15 +1466,18 @@
                                         "data": {
                                             "properties": {
                                                 "tanggal": {
+                                                    "description": "Tanggal yang diminta",
                                                     "type": "string",
                                                     "format": "date",
                                                     "example": "2026-11-22"
                                                 },
                                                 "total_pemasukan": {
+                                                    "description": "Total pemasukan pada tanggal tersebut",
                                                     "type": "string",
                                                     "example": "1500000.00"
                                                 },
                                                 "total_kas_operasional": {
+                                                    "description": "Total kas operasional yang dialokasikan",
                                                     "type": "string",
                                                     "example": "550000.00"
                                                 }
@@ -853,23 +1567,27 @@
                                                     "type": "object"
                                                 },
                                                 "total_pemasukan": {
+                                                    "description": "Total semua pemasukan dalam periode",
                                                     "type": "string",
                                                     "example": "2000000.00"
                                                 },
                                                 "total_pengeluaran": {
+                                                    "description": "Total semua pengeluaran dalam periode",
                                                     "type": "string",
                                                     "example": "800000.00"
                                                 },
                                                 "total_kas_operasional": {
+                                                    "description": "Total kas operasional dari pemasukan",
                                                     "type": "string",
                                                     "example": "700000.00"
                                                 },
                                                 "total_laba_bersih": {
+                                                    "description": "Total laba bersih dari pemasukan",
                                                     "type": "string",
                                                     "example": "1300000.00"
                                                 },
                                                 "selisih": {
-                                                    "description": "Pemasukan - Pengeluaran",
+                                                    "description": "Selisih pemasukan dikurangi pengeluaran",
                                                     "type": "string",
                                                     "example": "1200000.00"
                                                 }
@@ -916,7 +1634,107 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data meja tanam berhasil diambil"
+                        "description": "Data meja tanam berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data meja tanam berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "nomor_meja": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "kapasitas_lubang": {
+                                                                "type": "integer",
+                                                                "example": 60
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "tersedia"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/meja-tanam?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/meja-tanam?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/meja-tanam?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthenticated"
@@ -1065,7 +1883,209 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data panen berhasil diambil"
+                        "description": "Data panen berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data panen berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "budidaya_id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "tanggal_panen": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2026-12-10"
+                                                            },
+                                                            "berat_kg": {
+                                                                "type": "number",
+                                                                "example": 12.5,
+                                                                "nullable": true
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "terjadwal"
+                                                            },
+                                                            "budidaya": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 3
+                                                                    },
+                                                                    "user_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "meja_id": {
+                                                                        "type": "integer",
+                                                                        "example": 2
+                                                                    },
+                                                                    "tanggal_semai": {
+                                                                        "type": "string",
+                                                                        "format": "date",
+                                                                        "example": "2026-11-01"
+                                                                    },
+                                                                    "jumlah_tanaman": {
+                                                                        "type": "integer",
+                                                                        "example": 50
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "example": "berjalan"
+                                                                    },
+                                                                    "hss": {
+                                                                        "type": "integer",
+                                                                        "example": 14
+                                                                    },
+                                                                    "user": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer",
+                                                                                "example": 1
+                                                                            },
+                                                                            "nama": {
+                                                                                "type": "string",
+                                                                                "example": "Budi Santoso"
+                                                                            },
+                                                                            "username": {
+                                                                                "type": "string",
+                                                                                "example": "budi_santoso"
+                                                                            },
+                                                                            "role": {
+                                                                                "type": "string",
+                                                                                "example": "pegawai"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    },
+                                                                    "meja": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer",
+                                                                                "example": 2
+                                                                            },
+                                                                            "nomor_meja": {
+                                                                                "type": "integer",
+                                                                                "example": 2
+                                                                            },
+                                                                            "kapasitas_lubang": {
+                                                                                "type": "integer",
+                                                                                "example": 60
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string",
+                                                                                "example": "digunakan"
+                                                                            },
+                                                                            "created_at": {
+                                                                                "type": "string",
+                                                                                "format": "date-time",
+                                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                                            },
+                                                                            "updated_at": {
+                                                                                "type": "string",
+                                                                                "format": "date-time",
+                                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/panen?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/panen?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/panen?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1117,7 +2137,157 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Panen berhasil dibuat"
+                        "description": "Panen berhasil dibuat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Panen berhasil dibuat."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "budidaya_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "tanggal_panen": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-12-10"
+                                                },
+                                                "berat_kg": {
+                                                    "type": "number",
+                                                    "example": 12.5,
+                                                    "nullable": true
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "terjadwal"
+                                                },
+                                                "budidaya": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "meja_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "tanggal_semai": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2026-11-01"
+                                                        },
+                                                        "jumlah_tanaman": {
+                                                            "type": "integer",
+                                                            "example": 50
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "berjalan"
+                                                        },
+                                                        "hss": {
+                                                            "type": "integer",
+                                                            "example": 14
+                                                        },
+                                                        "user": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "nama": {
+                                                                    "type": "string",
+                                                                    "example": "Budi Santoso"
+                                                                },
+                                                                "username": {
+                                                                    "type": "string",
+                                                                    "example": "budi_santoso"
+                                                                },
+                                                                "role": {
+                                                                    "type": "string",
+                                                                    "example": "pegawai"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "meja": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 2
+                                                                },
+                                                                "nomor_meja": {
+                                                                    "type": "integer",
+                                                                    "example": 2
+                                                                },
+                                                                "kapasitas_lubang": {
+                                                                    "type": "integer",
+                                                                    "example": 60
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "digunakan"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -1149,7 +2319,157 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data panen berhasil diambil"
+                        "description": "Data panen berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data panen berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "budidaya_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "tanggal_panen": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-12-10"
+                                                },
+                                                "berat_kg": {
+                                                    "type": "number",
+                                                    "example": 12.5,
+                                                    "nullable": true
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "terjadwal"
+                                                },
+                                                "budidaya": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "meja_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "tanggal_semai": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2026-11-01"
+                                                        },
+                                                        "jumlah_tanaman": {
+                                                            "type": "integer",
+                                                            "example": 50
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "berjalan"
+                                                        },
+                                                        "hss": {
+                                                            "type": "integer",
+                                                            "example": 14
+                                                        },
+                                                        "user": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "nama": {
+                                                                    "type": "string",
+                                                                    "example": "Budi Santoso"
+                                                                },
+                                                                "username": {
+                                                                    "type": "string",
+                                                                    "example": "budi_santoso"
+                                                                },
+                                                                "role": {
+                                                                    "type": "string",
+                                                                    "example": "pegawai"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "meja": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 2
+                                                                },
+                                                                "nomor_meja": {
+                                                                    "type": "integer",
+                                                                    "example": 2
+                                                                },
+                                                                "kapasitas_lubang": {
+                                                                    "type": "integer",
+                                                                    "example": 60
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "digunakan"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Not found"
@@ -1209,7 +2529,157 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Panen berhasil diperbarui"
+                        "description": "Panen berhasil diperbarui",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Panen berhasil diperbarui."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "budidaya_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "tanggal_panen": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-12-10"
+                                                },
+                                                "berat_kg": {
+                                                    "type": "number",
+                                                    "example": 12.5,
+                                                    "nullable": true
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "terjadwal"
+                                                },
+                                                "budidaya": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "meja_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "tanggal_semai": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2026-11-01"
+                                                        },
+                                                        "jumlah_tanaman": {
+                                                            "type": "integer",
+                                                            "example": 50
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "berjalan"
+                                                        },
+                                                        "hss": {
+                                                            "type": "integer",
+                                                            "example": 14
+                                                        },
+                                                        "user": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "nama": {
+                                                                    "type": "string",
+                                                                    "example": "Budi Santoso"
+                                                                },
+                                                                "username": {
+                                                                    "type": "string",
+                                                                    "example": "budi_santoso"
+                                                                },
+                                                                "role": {
+                                                                    "type": "string",
+                                                                    "example": "pegawai"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "meja": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 2
+                                                                },
+                                                                "nomor_meja": {
+                                                                    "type": "integer",
+                                                                    "example": 2
+                                                                },
+                                                                "kapasitas_lubang": {
+                                                                    "type": "integer",
+                                                                    "example": 60
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "digunakan"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -1270,7 +2740,181 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data penggunaan operasional berhasil diambil"
+                        "description": "Data penggunaan operasional berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data penggunaan operasional berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "stok_id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "tanggal": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2026-11-22"
+                                                            },
+                                                            "jumlah": {
+                                                                "type": "number",
+                                                                "example": 5
+                                                            },
+                                                            "keterangan": {
+                                                                "type": "string",
+                                                                "example": "Penyiraman rutin",
+                                                                "nullable": true
+                                                            },
+                                                            "user": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "nama": {
+                                                                        "type": "string",
+                                                                        "example": "Budi Santoso"
+                                                                    },
+                                                                    "username": {
+                                                                        "type": "string",
+                                                                        "example": "budi_santoso"
+                                                                    },
+                                                                    "role": {
+                                                                        "type": "string",
+                                                                        "example": "pegawai"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "stok": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 2
+                                                                    },
+                                                                    "nama_bahan": {
+                                                                        "type": "string",
+                                                                        "example": "Pupuk NPK"
+                                                                    },
+                                                                    "kategori": {
+                                                                        "type": "string",
+                                                                        "example": "Pupuk"
+                                                                    },
+                                                                    "satuan": {
+                                                                        "type": "string",
+                                                                        "example": "kg"
+                                                                    },
+                                                                    "jumlah_stok": {
+                                                                        "type": "number",
+                                                                        "example": 20.5
+                                                                    },
+                                                                    "batas_minimum": {
+                                                                        "type": "number",
+                                                                        "example": 10
+                                                                    },
+                                                                    "is_low": {
+                                                                        "type": "boolean",
+                                                                        "example": false
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/penggunaan-operasional?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/penggunaan-operasional?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/penggunaan-operasional?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1320,7 +2964,129 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Penggunaan operasional berhasil dicatat"
+                        "description": "Penggunaan operasional berhasil dicatat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Penggunaan operasional berhasil dicatat."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "stok_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tanggal": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-22"
+                                                },
+                                                "jumlah": {
+                                                    "type": "number",
+                                                    "example": 5
+                                                },
+                                                "keterangan": {
+                                                    "type": "string",
+                                                    "example": "Penyiraman rutin",
+                                                    "nullable": true
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Budi Santoso"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "budi_santoso"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pegawai"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "stok": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "nama_bahan": {
+                                                            "type": "string",
+                                                            "example": "Pupuk NPK"
+                                                        },
+                                                        "kategori": {
+                                                            "type": "string",
+                                                            "example": "Pupuk"
+                                                        },
+                                                        "satuan": {
+                                                            "type": "string",
+                                                            "example": "kg"
+                                                        },
+                                                        "jumlah_stok": {
+                                                            "type": "number",
+                                                            "example": 20.5
+                                                        },
+                                                        "batas_minimum": {
+                                                            "type": "number",
+                                                            "example": 10
+                                                        },
+                                                        "is_low": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -1527,7 +3293,119 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data stok berhasil diambil"
+                        "description": "Data stok berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data stok berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "nama_bahan": {
+                                                                "type": "string",
+                                                                "example": "Pupuk NPK"
+                                                            },
+                                                            "kategori": {
+                                                                "type": "string",
+                                                                "example": "Pupuk"
+                                                            },
+                                                            "satuan": {
+                                                                "type": "string",
+                                                                "example": "kg"
+                                                            },
+                                                            "jumlah_stok": {
+                                                                "type": "number",
+                                                                "example": 25.5
+                                                            },
+                                                            "batas_minimum": {
+                                                                "type": "number",
+                                                                "example": 10
+                                                            },
+                                                            "is_low": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/stok?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/stok?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/stok?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1583,7 +3461,67 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Stok berhasil dibuat"
+                        "description": "Stok berhasil dibuat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok berhasil dibuat."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama_bahan": {
+                                                    "type": "string",
+                                                    "example": "Pupuk NPK"
+                                                },
+                                                "kategori": {
+                                                    "type": "string",
+                                                    "example": "Pupuk"
+                                                },
+                                                "satuan": {
+                                                    "type": "string",
+                                                    "example": "kg"
+                                                },
+                                                "jumlah_stok": {
+                                                    "type": "number",
+                                                    "example": 25.5
+                                                },
+                                                "batas_minimum": {
+                                                    "type": "number",
+                                                    "example": 10
+                                                },
+                                                "is_low": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -1615,7 +3553,67 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data stok berhasil diambil"
+                        "description": "Data stok berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data stok berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama_bahan": {
+                                                    "type": "string",
+                                                    "example": "Pupuk NPK"
+                                                },
+                                                "kategori": {
+                                                    "type": "string",
+                                                    "example": "Pupuk"
+                                                },
+                                                "satuan": {
+                                                    "type": "string",
+                                                    "example": "kg"
+                                                },
+                                                "jumlah_stok": {
+                                                    "type": "number",
+                                                    "example": 25.5
+                                                },
+                                                "batas_minimum": {
+                                                    "type": "number",
+                                                    "example": 10
+                                                },
+                                                "is_low": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Not found"
@@ -1672,7 +3670,67 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Stok berhasil diperbarui"
+                        "description": "Stok berhasil diperbarui",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok berhasil diperbarui."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama_bahan": {
+                                                    "type": "string",
+                                                    "example": "Pupuk NPK"
+                                                },
+                                                "kategori": {
+                                                    "type": "string",
+                                                    "example": "Pupuk"
+                                                },
+                                                "satuan": {
+                                                    "type": "string",
+                                                    "example": "kg"
+                                                },
+                                                "jumlah_stok": {
+                                                    "type": "number",
+                                                    "example": 25.5
+                                                },
+                                                "batas_minimum": {
+                                                    "type": "number",
+                                                    "example": 10
+                                                },
+                                                "is_low": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -1748,9 +3806,179 @@
                                             "example": true
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Data transaksi keuangan berhasil diambil."
                                         },
                                         "data": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "panen_id": {
+                                                                "type": "integer",
+                                                                "example": 2,
+                                                                "nullable": true
+                                                            },
+                                                            "jenis": {
+                                                                "type": "string",
+                                                                "example": "pemasukan"
+                                                            },
+                                                            "tanggal": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2026-11-22"
+                                                            },
+                                                            "jumlah": {
+                                                                "type": "string",
+                                                                "example": "1500000.00"
+                                                            },
+                                                            "persentase_kas": {
+                                                                "type": "string",
+                                                                "example": "35.00",
+                                                                "nullable": true
+                                                            },
+                                                            "kas_operasional": {
+                                                                "type": "string",
+                                                                "example": "525000.00",
+                                                                "nullable": true
+                                                            },
+                                                            "laba_bersih": {
+                                                                "type": "string",
+                                                                "example": "975000.00",
+                                                                "nullable": true
+                                                            },
+                                                            "keterangan": {
+                                                                "type": "string",
+                                                                "example": "Penjualan panen November",
+                                                                "nullable": true
+                                                            },
+                                                            "user": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "nama": {
+                                                                        "type": "string",
+                                                                        "example": "Pemilik Kebun"
+                                                                    },
+                                                                    "username": {
+                                                                        "type": "string",
+                                                                        "example": "pemilik"
+                                                                    },
+                                                                    "role": {
+                                                                        "type": "string",
+                                                                        "example": "pemilik"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "panen": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 2
+                                                                    },
+                                                                    "budidaya_id": {
+                                                                        "type": "integer",
+                                                                        "example": 3
+                                                                    },
+                                                                    "tanggal_panen": {
+                                                                        "type": "string",
+                                                                        "format": "date",
+                                                                        "example": "2026-12-10"
+                                                                    },
+                                                                    "berat_kg": {
+                                                                        "type": "number",
+                                                                        "example": 12.5,
+                                                                        "nullable": true
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "example": "selesai"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2026-11-22T10:30:00.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object",
+                                                                "nullable": true
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2026-11-22T10:30:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "links": {
+                                                    "properties": {
+                                                        "first": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/transaksi-keuangan?page=1"
+                                                        },
+                                                        "last": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/transaksi-keuangan?page=3"
+                                                        },
+                                                        "prev": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "next": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/api/v1/transaksi-keuangan?page=2",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "meta": {
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
                                             "type": "object"
                                         }
                                     },
@@ -1826,7 +4054,144 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Transaksi berhasil dibuat. Server auto-calculate kas_operasional & laba_bersih"
+                        "description": "Transaksi berhasil dibuat. Server auto-calculate kas_operasional & laba_bersih",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaksi keuangan berhasil dibuat."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "panen_id": {
+                                                    "type": "integer",
+                                                    "example": 2,
+                                                    "nullable": true
+                                                },
+                                                "jenis": {
+                                                    "type": "string",
+                                                    "example": "pemasukan"
+                                                },
+                                                "tanggal": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-22"
+                                                },
+                                                "jumlah": {
+                                                    "type": "string",
+                                                    "example": "1500000.00"
+                                                },
+                                                "persentase_kas": {
+                                                    "type": "string",
+                                                    "example": "35.00",
+                                                    "nullable": true
+                                                },
+                                                "kas_operasional": {
+                                                    "type": "string",
+                                                    "example": "525000.00",
+                                                    "nullable": true
+                                                },
+                                                "laba_bersih": {
+                                                    "type": "string",
+                                                    "example": "975000.00",
+                                                    "nullable": true
+                                                },
+                                                "keterangan": {
+                                                    "type": "string",
+                                                    "example": "Penjualan panen November",
+                                                    "nullable": true
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Pemilik Kebun"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "pemilik"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pemilik"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "panen": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "budidaya_id": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "tanggal_panen": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2026-12-10"
+                                                        },
+                                                        "berat_kg": {
+                                                            "type": "number",
+                                                            "example": 12.5,
+                                                            "nullable": true
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "selesai"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object",
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -1861,7 +4226,144 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Data berhasil diambil"
+                        "description": "Data berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data transaksi keuangan berhasil diambil."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "panen_id": {
+                                                    "type": "integer",
+                                                    "example": 2,
+                                                    "nullable": true
+                                                },
+                                                "jenis": {
+                                                    "type": "string",
+                                                    "example": "pemasukan"
+                                                },
+                                                "tanggal": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-22"
+                                                },
+                                                "jumlah": {
+                                                    "type": "string",
+                                                    "example": "1500000.00"
+                                                },
+                                                "persentase_kas": {
+                                                    "type": "string",
+                                                    "example": "35.00",
+                                                    "nullable": true
+                                                },
+                                                "kas_operasional": {
+                                                    "type": "string",
+                                                    "example": "525000.00",
+                                                    "nullable": true
+                                                },
+                                                "laba_bersih": {
+                                                    "type": "string",
+                                                    "example": "975000.00",
+                                                    "nullable": true
+                                                },
+                                                "keterangan": {
+                                                    "type": "string",
+                                                    "example": "Penjualan panen November",
+                                                    "nullable": true
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Pemilik Kebun"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "pemilik"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pemilik"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "panen": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "budidaya_id": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "tanggal_panen": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2026-12-10"
+                                                        },
+                                                        "berat_kg": {
+                                                            "type": "number",
+                                                            "example": 12.5,
+                                                            "nullable": true
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "selesai"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object",
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Transaksi tidak ditemukan"
@@ -1936,7 +4438,144 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Transaksi berhasil diperbarui dengan recalculation"
+                        "description": "Transaksi berhasil diperbarui dengan recalculation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaksi keuangan berhasil diperbarui."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "panen_id": {
+                                                    "type": "integer",
+                                                    "example": 2,
+                                                    "nullable": true
+                                                },
+                                                "jenis": {
+                                                    "type": "string",
+                                                    "example": "pemasukan"
+                                                },
+                                                "tanggal": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2026-11-22"
+                                                },
+                                                "jumlah": {
+                                                    "type": "string",
+                                                    "example": "1500000.00"
+                                                },
+                                                "persentase_kas": {
+                                                    "type": "string",
+                                                    "example": "35.00",
+                                                    "nullable": true
+                                                },
+                                                "kas_operasional": {
+                                                    "type": "string",
+                                                    "example": "525000.00",
+                                                    "nullable": true
+                                                },
+                                                "laba_bersih": {
+                                                    "type": "string",
+                                                    "example": "975000.00",
+                                                    "nullable": true
+                                                },
+                                                "keterangan": {
+                                                    "type": "string",
+                                                    "example": "Penjualan panen November",
+                                                    "nullable": true
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nama": {
+                                                            "type": "string",
+                                                            "example": "Pemilik Kebun"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "pemilik"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "pemilik"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "panen": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "budidaya_id": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "tanggal_panen": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2026-12-10"
+                                                        },
+                                                        "berat_kg": {
+                                                            "type": "number",
+                                                            "example": 12.5,
+                                                            "nullable": true
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "selesai"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2026-11-22T10:30:00.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object",
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2026-11-22T10:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Transaksi tidak ditemukan"

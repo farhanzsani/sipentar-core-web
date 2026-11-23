@@ -30,7 +30,95 @@ class PanenController extends Controller
             new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date'))
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Data panen berhasil diambil')
+            new OA\Response(
+                response: 200,
+                description: 'Data panen berhasil diambil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data panen berhasil diambil.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(
+                                    property: 'data',
+                                    type: 'array',
+                                    items: new OA\Items(
+                                        properties: [
+                                            new OA\Property(property: 'id', type: 'integer', example: 1),
+                                            new OA\Property(property: 'budidaya_id', type: 'integer', example: 3),
+                                            new OA\Property(property: 'tanggal_panen', type: 'string', format: 'date', example: '2026-12-10'),
+                                            new OA\Property(property: 'berat_kg', type: 'number', nullable: true, example: 12.5),
+                                            new OA\Property(property: 'status', type: 'string', example: 'terjadwal'),
+                                            new OA\Property(
+                                                property: 'budidaya',
+                                                properties: [
+                                                    new OA\Property(property: 'id', type: 'integer', example: 3),
+                                                    new OA\Property(property: 'user_id', type: 'integer', example: 1),
+                                                    new OA\Property(property: 'meja_id', type: 'integer', example: 2),
+                                                    new OA\Property(property: 'tanggal_semai', type: 'string', format: 'date', example: '2026-11-01'),
+                                                    new OA\Property(property: 'jumlah_tanaman', type: 'integer', example: 50),
+                                                    new OA\Property(property: 'status', type: 'string', example: 'berjalan'),
+                                                    new OA\Property(property: 'hss', type: 'integer', example: 14),
+                                                    new OA\Property(
+                                                        property: 'user',
+                                                        properties: [
+                                                            new OA\Property(property: 'id', type: 'integer', example: 1),
+                                                            new OA\Property(property: 'nama', type: 'string', example: 'Budi Santoso'),
+                                                            new OA\Property(property: 'username', type: 'string', example: 'budi_santoso'),
+                                                            new OA\Property(property: 'role', type: 'string', example: 'pegawai')
+                                                        ],
+                                                        type: 'object'
+                                                    ),
+                                                    new OA\Property(
+                                                        property: 'meja',
+                                                        properties: [
+                                                            new OA\Property(property: 'id', type: 'integer', example: 2),
+                                                            new OA\Property(property: 'nomor_meja', type: 'integer', example: 2),
+                                                            new OA\Property(property: 'kapasitas_lubang', type: 'integer', example: 60),
+                                                            new OA\Property(property: 'status', type: 'string', example: 'digunakan'),
+                                                            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                                            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                                        ],
+                                                        type: 'object'
+                                                    ),
+                                                    new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                                    new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                                ],
+                                                type: 'object'
+                                            ),
+                                            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                        ],
+                                        type: 'object'
+                                    )
+                                ),
+                                new OA\Property(
+                                    property: 'links',
+                                    properties: [
+                                        new OA\Property(property: 'first', type: 'string', example: 'http://localhost:8000/api/v1/panen?page=1'),
+                                        new OA\Property(property: 'last', type: 'string', example: 'http://localhost:8000/api/v1/panen?page=3'),
+                                        new OA\Property(property: 'prev', type: 'string', nullable: true, example: null),
+                                        new OA\Property(property: 'next', type: 'string', nullable: true, example: 'http://localhost:8000/api/v1/panen?page=2')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(
+                                    property: 'meta',
+                                    properties: [
+                                        new OA\Property(property: 'current_page', type: 'integer', example: 1),
+                                        new OA\Property(property: 'last_page', type: 'integer', example: 3),
+                                        new OA\Property(property: 'per_page', type: 'integer', example: 15),
+                                        new OA\Property(property: 'total', type: 'integer', example: 42)
+                                    ],
+                                    type: 'object'
+                                )
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -91,7 +179,66 @@ class PanenController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Panen berhasil dibuat'),
+            new OA\Response(
+                response: 201,
+                description: 'Panen berhasil dibuat',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Panen berhasil dibuat.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'budidaya_id', type: 'integer', example: 3),
+                                new OA\Property(property: 'tanggal_panen', type: 'string', format: 'date', example: '2026-12-10'),
+                                new OA\Property(property: 'berat_kg', type: 'number', nullable: true, example: 12.5),
+                                new OA\Property(property: 'status', type: 'string', example: 'terjadwal'),
+                                new OA\Property(
+                                    property: 'budidaya',
+                                    properties: [
+                                        new OA\Property(property: 'id', type: 'integer', example: 3),
+                                        new OA\Property(property: 'user_id', type: 'integer', example: 1),
+                                        new OA\Property(property: 'meja_id', type: 'integer', example: 2),
+                                        new OA\Property(property: 'tanggal_semai', type: 'string', format: 'date', example: '2026-11-01'),
+                                        new OA\Property(property: 'jumlah_tanaman', type: 'integer', example: 50),
+                                        new OA\Property(property: 'status', type: 'string', example: 'berjalan'),
+                                        new OA\Property(property: 'hss', type: 'integer', example: 14),
+                                        new OA\Property(
+                                            property: 'user',
+                                            properties: [
+                                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                                new OA\Property(property: 'nama', type: 'string', example: 'Budi Santoso'),
+                                                new OA\Property(property: 'username', type: 'string', example: 'budi_santoso'),
+                                                new OA\Property(property: 'role', type: 'string', example: 'pegawai')
+                                            ],
+                                            type: 'object'
+                                        ),
+                                        new OA\Property(
+                                            property: 'meja',
+                                            properties: [
+                                                new OA\Property(property: 'id', type: 'integer', example: 2),
+                                                new OA\Property(property: 'nomor_meja', type: 'integer', example: 2),
+                                                new OA\Property(property: 'kapasitas_lubang', type: 'integer', example: 60),
+                                                new OA\Property(property: 'status', type: 'string', example: 'digunakan'),
+                                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                            ],
+                                            type: 'object'
+                                        ),
+                                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 422, description: 'Validation error')
         ]
     )]
@@ -117,7 +264,66 @@ class PanenController extends Controller
             new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Data panen berhasil diambil'),
+            new OA\Response(
+                response: 200,
+                description: 'Data panen berhasil diambil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data panen berhasil diambil.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'budidaya_id', type: 'integer', example: 3),
+                                new OA\Property(property: 'tanggal_panen', type: 'string', format: 'date', example: '2026-12-10'),
+                                new OA\Property(property: 'berat_kg', type: 'number', nullable: true, example: 12.5),
+                                new OA\Property(property: 'status', type: 'string', example: 'terjadwal'),
+                                new OA\Property(
+                                    property: 'budidaya',
+                                    properties: [
+                                        new OA\Property(property: 'id', type: 'integer', example: 3),
+                                        new OA\Property(property: 'user_id', type: 'integer', example: 1),
+                                        new OA\Property(property: 'meja_id', type: 'integer', example: 2),
+                                        new OA\Property(property: 'tanggal_semai', type: 'string', format: 'date', example: '2026-11-01'),
+                                        new OA\Property(property: 'jumlah_tanaman', type: 'integer', example: 50),
+                                        new OA\Property(property: 'status', type: 'string', example: 'berjalan'),
+                                        new OA\Property(property: 'hss', type: 'integer', example: 14),
+                                        new OA\Property(
+                                            property: 'user',
+                                            properties: [
+                                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                                new OA\Property(property: 'nama', type: 'string', example: 'Budi Santoso'),
+                                                new OA\Property(property: 'username', type: 'string', example: 'budi_santoso'),
+                                                new OA\Property(property: 'role', type: 'string', example: 'pegawai')
+                                            ],
+                                            type: 'object'
+                                        ),
+                                        new OA\Property(
+                                            property: 'meja',
+                                            properties: [
+                                                new OA\Property(property: 'id', type: 'integer', example: 2),
+                                                new OA\Property(property: 'nomor_meja', type: 'integer', example: 2),
+                                                new OA\Property(property: 'kapasitas_lubang', type: 'integer', example: 60),
+                                                new OA\Property(property: 'status', type: 'string', example: 'digunakan'),
+                                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                            ],
+                                            type: 'object'
+                                        ),
+                                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 404, description: 'Not found')
         ]
     )]
@@ -151,7 +357,66 @@ class PanenController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Panen berhasil diperbarui'),
+            new OA\Response(
+                response: 200,
+                description: 'Panen berhasil diperbarui',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Panen berhasil diperbarui.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'budidaya_id', type: 'integer', example: 3),
+                                new OA\Property(property: 'tanggal_panen', type: 'string', format: 'date', example: '2026-12-10'),
+                                new OA\Property(property: 'berat_kg', type: 'number', nullable: true, example: 12.5),
+                                new OA\Property(property: 'status', type: 'string', example: 'terjadwal'),
+                                new OA\Property(
+                                    property: 'budidaya',
+                                    properties: [
+                                        new OA\Property(property: 'id', type: 'integer', example: 3),
+                                        new OA\Property(property: 'user_id', type: 'integer', example: 1),
+                                        new OA\Property(property: 'meja_id', type: 'integer', example: 2),
+                                        new OA\Property(property: 'tanggal_semai', type: 'string', format: 'date', example: '2026-11-01'),
+                                        new OA\Property(property: 'jumlah_tanaman', type: 'integer', example: 50),
+                                        new OA\Property(property: 'status', type: 'string', example: 'berjalan'),
+                                        new OA\Property(property: 'hss', type: 'integer', example: 14),
+                                        new OA\Property(
+                                            property: 'user',
+                                            properties: [
+                                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                                new OA\Property(property: 'nama', type: 'string', example: 'Budi Santoso'),
+                                                new OA\Property(property: 'username', type: 'string', example: 'budi_santoso'),
+                                                new OA\Property(property: 'role', type: 'string', example: 'pegawai')
+                                            ],
+                                            type: 'object'
+                                        ),
+                                        new OA\Property(
+                                            property: 'meja',
+                                            properties: [
+                                                new OA\Property(property: 'id', type: 'integer', example: 2),
+                                                new OA\Property(property: 'nomor_meja', type: 'integer', example: 2),
+                                                new OA\Property(property: 'kapasitas_lubang', type: 'integer', example: 60),
+                                                new OA\Property(property: 'status', type: 'string', example: 'digunakan'),
+                                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                            ],
+                                            type: 'object'
+                                        ),
+                                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 422, description: 'Validation error'),
             new OA\Response(response: 404, description: 'Not found')
         ]

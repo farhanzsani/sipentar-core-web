@@ -25,7 +25,60 @@ class StokController extends Controller
             new OA\Parameter(name: 'per_page', in: 'query', required: false, schema: new OA\Schema(type: 'integer', default: 15))
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Data stok berhasil diambil')
+            new OA\Response(
+                response: 200,
+                description: 'Data stok berhasil diambil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data stok berhasil diambil.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(
+                                    property: 'data',
+                                    type: 'array',
+                                    items: new OA\Items(
+                                        properties: [
+                                            new OA\Property(property: 'id', type: 'integer', example: 1),
+                                            new OA\Property(property: 'nama_bahan', type: 'string', example: 'Pupuk NPK'),
+                                            new OA\Property(property: 'kategori', type: 'string', example: 'Pupuk'),
+                                            new OA\Property(property: 'satuan', type: 'string', example: 'kg'),
+                                            new OA\Property(property: 'jumlah_stok', type: 'number', example: 25.50),
+                                            new OA\Property(property: 'batas_minimum', type: 'number', example: 10.00),
+                                            new OA\Property(property: 'is_low', type: 'boolean', example: false),
+                                            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                        ],
+                                        type: 'object'
+                                    )
+                                ),
+                                new OA\Property(
+                                    property: 'links',
+                                    properties: [
+                                        new OA\Property(property: 'first', type: 'string', example: 'http://localhost:8000/api/v1/stok?page=1'),
+                                        new OA\Property(property: 'last', type: 'string', example: 'http://localhost:8000/api/v1/stok?page=3'),
+                                        new OA\Property(property: 'prev', type: 'string', nullable: true, example: null),
+                                        new OA\Property(property: 'next', type: 'string', nullable: true, example: 'http://localhost:8000/api/v1/stok?page=2')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(
+                                    property: 'meta',
+                                    properties: [
+                                        new OA\Property(property: 'current_page', type: 'integer', example: 1),
+                                        new OA\Property(property: 'last_page', type: 'integer', example: 3),
+                                        new OA\Property(property: 'per_page', type: 'integer', example: 15),
+                                        new OA\Property(property: 'total', type: 'integer', example: 42)
+                                    ],
+                                    type: 'object'
+                                )
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -58,7 +111,31 @@ class StokController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Stok berhasil dibuat'),
+            new OA\Response(
+                response: 201,
+                description: 'Stok berhasil dibuat',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Stok berhasil dibuat.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'nama_bahan', type: 'string', example: 'Pupuk NPK'),
+                                new OA\Property(property: 'kategori', type: 'string', example: 'Pupuk'),
+                                new OA\Property(property: 'satuan', type: 'string', example: 'kg'),
+                                new OA\Property(property: 'jumlah_stok', type: 'number', example: 25.50),
+                                new OA\Property(property: 'batas_minimum', type: 'number', example: 10.00),
+                                new OA\Property(property: 'is_low', type: 'boolean', example: false),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 422, description: 'Validation error')
         ]
     )]
@@ -82,7 +159,31 @@ class StokController extends Controller
             new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Data stok berhasil diambil'),
+            new OA\Response(
+                response: 200,
+                description: 'Data stok berhasil diambil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data stok berhasil diambil.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'nama_bahan', type: 'string', example: 'Pupuk NPK'),
+                                new OA\Property(property: 'kategori', type: 'string', example: 'Pupuk'),
+                                new OA\Property(property: 'satuan', type: 'string', example: 'kg'),
+                                new OA\Property(property: 'jumlah_stok', type: 'number', example: 25.50),
+                                new OA\Property(property: 'batas_minimum', type: 'number', example: 10.00),
+                                new OA\Property(property: 'is_low', type: 'boolean', example: false),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 404, description: 'Not found')
         ]
     )]
@@ -117,7 +218,31 @@ class StokController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Stok berhasil diperbarui'),
+            new OA\Response(
+                response: 200,
+                description: 'Stok berhasil diperbarui',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Stok berhasil diperbarui.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'nama_bahan', type: 'string', example: 'Pupuk NPK'),
+                                new OA\Property(property: 'kategori', type: 'string', example: 'Pupuk'),
+                                new OA\Property(property: 'satuan', type: 'string', example: 'kg'),
+                                new OA\Property(property: 'jumlah_stok', type: 'number', example: 25.50),
+                                new OA\Property(property: 'batas_minimum', type: 'number', example: 10.00),
+                                new OA\Property(property: 'is_low', type: 'boolean', example: false),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 422, description: 'Validation error'),
             new OA\Response(response: 404, description: 'Not found')
         ]

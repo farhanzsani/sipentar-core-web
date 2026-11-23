@@ -32,7 +32,84 @@ class PenggunaanOperasionalController extends Controller
             new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date'))
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Data penggunaan operasional berhasil diambil')
+            new OA\Response(
+                response: 200,
+                description: 'Data penggunaan operasional berhasil diambil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data penggunaan operasional berhasil diambil.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(
+                                    property: 'data',
+                                    type: 'array',
+                                    items: new OA\Items(
+                                        properties: [
+                                            new OA\Property(property: 'id', type: 'integer', example: 1),
+                                            new OA\Property(property: 'user_id', type: 'integer', example: 1),
+                                            new OA\Property(property: 'stok_id', type: 'integer', example: 2),
+                                            new OA\Property(property: 'tanggal', type: 'string', format: 'date', example: '2026-11-22'),
+                                            new OA\Property(property: 'jumlah', type: 'number', example: 5.00),
+                                            new OA\Property(property: 'keterangan', type: 'string', nullable: true, example: 'Penyiraman rutin'),
+                                            new OA\Property(
+                                                property: 'user',
+                                                properties: [
+                                                    new OA\Property(property: 'id', type: 'integer', example: 1),
+                                                    new OA\Property(property: 'nama', type: 'string', example: 'Budi Santoso'),
+                                                    new OA\Property(property: 'username', type: 'string', example: 'budi_santoso'),
+                                                    new OA\Property(property: 'role', type: 'string', example: 'pegawai')
+                                                ],
+                                                type: 'object'
+                                            ),
+                                            new OA\Property(
+                                                property: 'stok',
+                                                properties: [
+                                                    new OA\Property(property: 'id', type: 'integer', example: 2),
+                                                    new OA\Property(property: 'nama_bahan', type: 'string', example: 'Pupuk NPK'),
+                                                    new OA\Property(property: 'kategori', type: 'string', example: 'Pupuk'),
+                                                    new OA\Property(property: 'satuan', type: 'string', example: 'kg'),
+                                                    new OA\Property(property: 'jumlah_stok', type: 'number', example: 20.50),
+                                                    new OA\Property(property: 'batas_minimum', type: 'number', example: 10.00),
+                                                    new OA\Property(property: 'is_low', type: 'boolean', example: false),
+                                                    new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                                    new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                                ],
+                                                type: 'object'
+                                            ),
+                                            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                        ],
+                                        type: 'object'
+                                    )
+                                ),
+                                new OA\Property(
+                                    property: 'links',
+                                    properties: [
+                                        new OA\Property(property: 'first', type: 'string', example: 'http://localhost:8000/api/v1/penggunaan-operasional?page=1'),
+                                        new OA\Property(property: 'last', type: 'string', example: 'http://localhost:8000/api/v1/penggunaan-operasional?page=3'),
+                                        new OA\Property(property: 'prev', type: 'string', nullable: true, example: null),
+                                        new OA\Property(property: 'next', type: 'string', nullable: true, example: 'http://localhost:8000/api/v1/penggunaan-operasional?page=2')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(
+                                    property: 'meta',
+                                    properties: [
+                                        new OA\Property(property: 'current_page', type: 'integer', example: 1),
+                                        new OA\Property(property: 'last_page', type: 'integer', example: 3),
+                                        new OA\Property(property: 'per_page', type: 'integer', example: 15),
+                                        new OA\Property(property: 'total', type: 'integer', example: 42)
+                                    ],
+                                    type: 'object'
+                                )
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -81,7 +158,55 @@ class PenggunaanOperasionalController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Penggunaan operasional berhasil dicatat'),
+            new OA\Response(
+                response: 201,
+                description: 'Penggunaan operasional berhasil dicatat',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Penggunaan operasional berhasil dicatat.'),
+                        new OA\Property(
+                            property: 'data',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer', example: 1),
+                                new OA\Property(property: 'user_id', type: 'integer', example: 1),
+                                new OA\Property(property: 'stok_id', type: 'integer', example: 2),
+                                new OA\Property(property: 'tanggal', type: 'string', format: 'date', example: '2026-11-22'),
+                                new OA\Property(property: 'jumlah', type: 'number', example: 5.00),
+                                new OA\Property(property: 'keterangan', type: 'string', nullable: true, example: 'Penyiraman rutin'),
+                                new OA\Property(
+                                    property: 'user',
+                                    properties: [
+                                        new OA\Property(property: 'id', type: 'integer', example: 1),
+                                        new OA\Property(property: 'nama', type: 'string', example: 'Budi Santoso'),
+                                        new OA\Property(property: 'username', type: 'string', example: 'budi_santoso'),
+                                        new OA\Property(property: 'role', type: 'string', example: 'pegawai')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(
+                                    property: 'stok',
+                                    properties: [
+                                        new OA\Property(property: 'id', type: 'integer', example: 2),
+                                        new OA\Property(property: 'nama_bahan', type: 'string', example: 'Pupuk NPK'),
+                                        new OA\Property(property: 'kategori', type: 'string', example: 'Pupuk'),
+                                        new OA\Property(property: 'satuan', type: 'string', example: 'kg'),
+                                        new OA\Property(property: 'jumlah_stok', type: 'number', example: 20.50),
+                                        new OA\Property(property: 'batas_minimum', type: 'number', example: 10.00),
+                                        new OA\Property(property: 'is_low', type: 'boolean', example: false),
+                                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                                    ],
+                                    type: 'object'
+                                ),
+                                new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z'),
+                                new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-11-22T10:30:00.000000Z')
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            ),
             new OA\Response(response: 422, description: 'Validation error')
         ]
     )]
