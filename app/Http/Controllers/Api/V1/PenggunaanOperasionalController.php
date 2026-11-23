@@ -109,6 +109,15 @@ class PenggunaanOperasionalController extends Controller
                         )
                     ]
                 )
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
             )
         ]
     )]
@@ -207,7 +216,35 @@ class PenggunaanOperasionalController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Validation error')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation error',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The stok_id field is required. (and 1 more error)'),
+                        new OA\Property(
+                            property: 'errors',
+                            properties: [
+                                new OA\Property(
+                                    property: 'stok_id',
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string', example: 'The stok_id field is required.')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function store(PenggunaanOperasionalStoreRequest $request): JsonResponse

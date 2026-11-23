@@ -109,6 +109,15 @@ class BudidayaController extends Controller
                         )
                     ]
                 )
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
             )
         ]
     )]
@@ -210,7 +219,35 @@ class BudidayaController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Validation error')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation error',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The meja_id field is required. (and 1 more error)'),
+                        new OA\Property(
+                            property: 'errors',
+                            properties: [
+                                new OA\Property(
+                                    property: 'meja_id',
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string', example: 'The meja_id field is required.')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function store(BudidayaStoreRequest $request): JsonResponse
@@ -285,7 +322,25 @@ class BudidayaController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 404, description: 'Not found')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Resource not found',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data budidaya tidak ditemukan.')
+                    ]
+                )
+            )
         ]
     )]
     public function show(int $id): JsonResponse
@@ -365,8 +420,45 @@ class BudidayaController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Validation error'),
-            new OA\Response(response: 404, description: 'Not found')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Resource not found',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data budidaya tidak ditemukan.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation error',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The meja_id field is required. (and 1 more error)'),
+                        new OA\Property(
+                            property: 'errors',
+                            properties: [
+                                new OA\Property(
+                                    property: 'meja_id',
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string', example: 'The meja_id field is required.')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function update(BudidayaUpdateRequest $request, int $id): JsonResponse

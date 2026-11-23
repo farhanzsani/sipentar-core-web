@@ -74,7 +74,15 @@ class MejaTanamController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 401, description: 'Unauthenticated')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            )
         ]
     )]
     public function index(Request $request): JsonResponse

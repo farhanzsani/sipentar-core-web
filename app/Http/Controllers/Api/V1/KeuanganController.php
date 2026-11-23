@@ -47,8 +47,45 @@ class KeuanganController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Validation error'),
-            new OA\Response(response: 403, description: 'Pegawai tidak memiliki akses')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 403,
+                description: 'Forbidden - Insufficient permissions',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Akses ditolak. Hanya pemilik yang dapat mengakses resource ini.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation error',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The lubang field is required. (and 1 more error)'),
+                        new OA\Property(
+                            property: 'errors',
+                            properties: [
+                                new OA\Property(
+                                    property: 'lubang',
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string', example: 'The lubang field is required.')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function hpp(Request $request): JsonResponse
@@ -102,8 +139,45 @@ class KeuanganController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Validation error'),
-            new OA\Response(response: 403, description: 'Pegawai tidak memiliki akses')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 403,
+                description: 'Forbidden - Insufficient permissions',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Akses ditolak. Hanya pemilik yang dapat mengakses resource ini.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation error',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The tanggal field is required. (and 1 more error)'),
+                        new OA\Property(
+                            property: 'errors',
+                            properties: [
+                                new OA\Property(
+                                    property: 'tanggal',
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string', example: 'The tanggal field is required.')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function alokasiKas(Request $request): JsonResponse
@@ -159,8 +233,45 @@ class KeuanganController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Validation error'),
-            new OA\Response(response: 403, description: 'Pegawai tidak memiliki akses')
+            new OA\Response(
+                response: 401,
+                description: 'Unauthenticated',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Unauthenticated.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 403,
+                description: 'Forbidden - Insufficient permissions',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Akses ditolak. Hanya pemilik yang dapat mengakses resource ini.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation error',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The from field is required. (and 1 more error)'),
+                        new OA\Property(
+                            property: 'errors',
+                            properties: [
+                                new OA\Property(
+                                    property: 'from',
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string', example: 'The from field is required.')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function laporan(Request $request): JsonResponse
