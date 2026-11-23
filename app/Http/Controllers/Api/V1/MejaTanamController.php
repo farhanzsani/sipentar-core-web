@@ -95,4 +95,62 @@ class MejaTanamController extends Controller
             'Data meja tanam berhasil diambil.'
         );
     }
+
+    #[OA\Delete(
+        path: '/api/v1/meja-tanam/{id}',
+        summary: 'Hapus meja tanam (dengan validasi)',
+        security: [['bearerAuth' => []]],
+        tags: ['MejaTanam'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Meja tanam berhasil dihapus',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Meja tanam berhasil dihapus.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Meja tanam tidak ditemukan',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data meja tanam tidak ditemukan.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'Conflict - Meja tanam tidak dapat dihapus karena ada budidaya berjalan',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Meja tanam tidak dapat dihapus karena masih ada budidaya yang berjalan.')
+                    ]
+                )
+            ),
+            new OA\Response(response: 401, description: 'Unauthenticated')
+        ]
+    )]
+    public function destroy(int $id): JsonResponse
+    {
+        $meja = MejaTanam::findOrFail($id);
+
+        if ($meja->budidayas()->where('status', 'berjalan')->exists()) {
+            return $this->errorResponse(
+                'Meja tanam tidak dapat dihapus karena masih ada budidaya yang berjalan.',
+                409
+            );
+        }
+
+        $meja->delete();
+
+        return $this->successResponse(null, 'Meja tanam berhasil dihapus.');
+    }
 }

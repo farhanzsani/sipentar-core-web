@@ -483,4 +483,71 @@ class BudidayaController extends Controller
             'Budidaya berhasil diperbarui.'
         );
     }
+
+    #[OA\Delete(
+        path: '/api/v1/budidaya/{id}',
+        summary: 'Hapus budidaya (dengan validasi)',
+        security: [['bearerAuth' => []]],
+        tags: ['Budidaya'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Budidaya berhasil dihapus',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Budidaya berhasil dihapus.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Budidaya tidak ditemukan',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data budidaya tidak ditemukan.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'Conflict - Budidaya tidak dapat dihapus',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Budidaya yang sudah selesai tidak dapat dihapus.')
+                    ]
+                )
+            ),
+            new OA\Response(response: 401, description: 'Unauthenticated')
+        ]
+    )]
+    public function destroy(int $id): JsonResponse
+    {
+        $budidaya = Budidaya::findOrFail($id);
+
+        if ($budidaya->status === 'selesai') {
+            return $this->errorResponse(
+                'Budidaya yang sudah selesai tidak dapat dihapus.',
+                409
+            );
+        }
+
+        if ($budidaya->panens()->exists()) {
+            return $this->errorResponse(
+                'Budidaya tidak dapat dihapus karena sudah ada data panen.',
+                409
+            );
+        }
+
+        $mejaId = $budidaya->meja_id;
+        $budidaya->delete();
+        $this->budidayaService->updateMejaStatus($mejaId);
+
+        return $this->successResponse(null, 'Budidaya berhasil dihapus.');
+    }
 }

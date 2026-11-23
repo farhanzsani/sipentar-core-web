@@ -526,4 +526,69 @@ class PanenController extends Controller
             'Panen berhasil diperbarui.'
         );
     }
+
+    #[OA\Delete(
+        path: '/api/v1/panen/{id}',
+        summary: 'Hapus data panen (dengan validasi)',
+        security: [['bearerAuth' => []]],
+        tags: ['Panen'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Panen berhasil dihapus',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Panen berhasil dihapus.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Panen tidak ditemukan',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data panen tidak ditemukan.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'Conflict - Panen tidak dapat dihapus',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Panen yang sudah selesai tidak dapat dihapus.')
+                    ]
+                )
+            ),
+            new OA\Response(response: 401, description: 'Unauthenticated')
+        ]
+    )]
+    public function destroy(int $id): JsonResponse
+    {
+        $panen = Panen::findOrFail($id);
+
+        if ($panen->status === 'selesai') {
+            return $this->errorResponse(
+                'Panen yang sudah selesai tidak dapat dihapus.',
+                409
+            );
+        }
+
+        if ($panen->transaksiKeuangans()->exists()) {
+            return $this->errorResponse(
+                'Panen tidak dapat dihapus karena sudah ada transaksi keuangan terkait.',
+                409
+            );
+        }
+
+        $panen->delete();
+
+        return $this->successResponse(null, 'Panen berhasil dihapus.');
+    }
 }

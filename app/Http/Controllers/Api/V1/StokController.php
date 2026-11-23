@@ -349,4 +349,62 @@ class StokController extends Controller
             'Stok berhasil diperbarui.'
         );
     }
+
+    #[OA\Delete(
+        path: '/api/v1/stok/{id}',
+        summary: 'Hapus stok (dengan validasi)',
+        security: [['bearerAuth' => []]],
+        tags: ['Stok'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Stok berhasil dihapus',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Stok berhasil dihapus.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Stok tidak ditemukan',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Data stok tidak ditemukan.')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'Conflict - Stok tidak dapat dihapus karena ada riwayat penggunaan',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Stok tidak dapat dihapus karena sudah ada riwayat penggunaan operasional.')
+                    ]
+                )
+            ),
+            new OA\Response(response: 401, description: 'Unauthenticated')
+        ]
+    )]
+    public function destroy(int $id): JsonResponse
+    {
+        $stok = Stok::findOrFail($id);
+
+        if ($stok->penggunaanOperasionals()->exists()) {
+            return $this->errorResponse(
+                'Stok tidak dapat dihapus karena sudah ada riwayat penggunaan operasional.',
+                409
+            );
+        }
+
+        $stok->delete();
+
+        return $this->successResponse(null, 'Stok berhasil dihapus.');
+    }
 }

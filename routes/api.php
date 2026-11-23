@@ -34,21 +34,25 @@ Route::prefix('v1')->group(function () {
         Route::post('/budidaya', [BudidayaController::class, 'store']);
         Route::get('/budidaya/{id}', [BudidayaController::class, 'show']);
         Route::put('/budidaya/{id}', [BudidayaController::class, 'update']);
+        Route::delete('/budidaya/{id}', [BudidayaController::class, 'destroy']);
 
         // Panen endpoints - all authenticated users
         Route::get('/panen', [PanenController::class, 'index']);
         Route::post('/panen', [PanenController::class, 'store']);
         Route::get('/panen/{id}', [PanenController::class, 'show']);
         Route::put('/panen/{id}', [PanenController::class, 'update']);
+        Route::delete('/panen/{id}', [PanenController::class, 'destroy']);
 
         // Meja Tanam endpoints - all authenticated users
         Route::get('/meja-tanam', [MejaTanamController::class, 'index']);
+        Route::delete('/meja-tanam/{id}', [MejaTanamController::class, 'destroy']);
 
         // Stok endpoints - all authenticated users
         Route::get('/stok', [StokController::class, 'index']);
         Route::post('/stok', [StokController::class, 'store']);
         Route::get('/stok/{id}', [StokController::class, 'show']);
         Route::put('/stok/{id}', [StokController::class, 'update']);
+        Route::delete('/stok/{id}', [StokController::class, 'destroy']);
 
         // Penggunaan Operasional endpoints - all authenticated users
         Route::get('/penggunaan-operasional', [PenggunaanOperasionalController::class, 'index']);
