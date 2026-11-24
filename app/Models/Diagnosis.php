@@ -37,17 +37,17 @@ class Diagnosis extends Model
             'user_id' => 'integer',
             'budidaya_id' => 'integer',
             'confidence' => 'decimal:2',
-            'tanggal_diagnosis' => 'timestamp',
+            'tanggal_diagnosis' => 'datetime',
         ];
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(User::class);
     }
 
     public function budidaya(): BelongsTo
     {
-        return $this->belongsTo(Budidayas::class);
+        return $this->belongsTo(Budidaya::class);
     }
 }

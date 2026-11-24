@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BudidayaController;
+use App\Http\Controllers\Api\V1\DiagnosisController;
 use App\Http\Controllers\Api\V1\KaryawanController;
 use App\Http\Controllers\Api\V1\KeuanganController;
 use App\Http\Controllers\Api\V1\MejaTanamController;
@@ -60,6 +61,11 @@ Route::prefix('v1')->group(function () {
 
         // Notifikasi endpoints - all authenticated users
         Route::get('/notifikasi', [NotifikasiController::class, 'index']);
+
+        // Diagnosis endpoints - all authenticated users
+        Route::get('/diagnosis', [DiagnosisController::class, 'index']);
+        Route::post('/diagnosis', [DiagnosisController::class, 'store'])->middleware('throttle:10,1');
+        Route::get('/diagnosis/{id}', [DiagnosisController::class, 'show']);
 
         // Profil endpoints - pemilik only
         Route::middleware('role:pemilik')->group(function () {
